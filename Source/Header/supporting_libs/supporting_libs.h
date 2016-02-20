@@ -1,4 +1,3 @@
-
 #ifndef supporting_libs
 #define supporting_libs
 
@@ -36,9 +35,19 @@ bool hash_tables::insert(value_type &v)
 
 class artificial_string : public std::string
 {
-
+    string str;
+    
+    bool captialize()
+    {
+        if (str.size())
+            str[0] = toupper(str[0]);
+    }
 };
 
+int len(artificial_string s)
+{
+    return s.str.size();
+}
 
 
 #endif
