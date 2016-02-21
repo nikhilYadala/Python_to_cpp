@@ -31,9 +31,11 @@ void source_code::functionize()
 				itr++;
 		}
 				
-		
+		int flag = 0;
 		std::string buff;
-		while(!(*itr=='\n'||*itr=='#')){			//This doesn't supports yet #,key words,etc. in strings ... small feature to implement later
+		while(!(*itr=='\n'||*itr=='#' && flag%2==0)){			//This doesn't supports yet #,key words,etc. in strings ... small feature to implement later
+			if(*itr=='"')
+				flag+=1;
 			buff.push_back(*itr);
 			itr++;
 		}
