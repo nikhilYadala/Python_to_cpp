@@ -39,15 +39,49 @@ class artificial_string : public std::string
     
     bool captialize()
     {
-        if (str.size())
+        if (str.size())                                    
             str[0] = toupper(str[0]);
     }
-};
+
 
 int len(artificial_string s)
 {
     return s.str.size();
 }
 
+   bool upper()
+   {
+    if(str.size())
+    {int i=0;
+        while(str[i]!='\0')
+        {str[i]=toupper(str[i]);            //To convert a string to capital character
+            i++;
+        }             
+        return true;
+    }
+    else return false;
+
+   }
+
+char max(artificial_string s)
+{int i=0,max=95;
+    char c=NULL;
+    if(s.str.size())
+   { while(str[i]!='\0')                        // To find maximum alphabetical character 
+   {
+    if('str[i]' > max && 'str[i]'< 123)
+    {
+        c=str[i];
+        max='str[i]';
+    }
+    i++;
+}return c;
+}
+else return NULL;
+}
+
+
+
+};
 
 #endif
