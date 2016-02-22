@@ -37,17 +37,24 @@ class artificial_string : public std::string
 {
     string str;
     
-    bool captialize()
+    bool captialize()    //String function for finding whether first letter is capital.
     {
         if (str.size())
+        {
+
             str[0] = toupper(str[0]);
+           return TRUE;
+        }
+        else
+        	return false;
     }
-};
+
 
 int len(artificial_string s)
 {
-    return s.str.size();
+    return s.str.size();   //To return the sting length
 }
 
+};
 
 #endif
