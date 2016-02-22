@@ -39,13 +39,10 @@ class artificial_string : public std::string
     
     bool captialize()    //String function for finding whether first letter is capital.
     {
-<<<<<<< HEAD
-        if (str.size())                                    
-=======
+
         if (str.size())
         {
 
->>>>>>> 08c4e59d7aa5e4d4dbfea54eddb9c43af43e9700
             str[0] = toupper(str[0]);
            return TRUE;
         }
@@ -59,7 +56,7 @@ int len(artificial_string s)
     return s.str.size();   //To return the sting length
 }
 
-<<<<<<< HEAD
+
    bool upper()
    {
     if(str.size())
@@ -92,9 +89,6 @@ else return NULL;
 }
 
 
-
-=======
->>>>>>> 08c4e59d7aa5e4d4dbfea54eddb9c43af43e9700
 };
 
 #endif
