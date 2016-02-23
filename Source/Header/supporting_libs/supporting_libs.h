@@ -41,13 +41,14 @@ class artificial_string : public std::string
     {
         if (str.size())
             str[0] = toupper(str[0]);
+        return true;
     }
-};
+
 
 int len(artificial_string s)
 {
     return s.str.size();
 }
 
-
+};
 #endif
