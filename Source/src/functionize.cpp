@@ -29,7 +29,7 @@ void source_code::functionize()
 					space_count++;
 				else space_count+=tab_size;
 				itr++;
-		}
+		} 
 				
 		int flag = 0;
 		std::string buff;
