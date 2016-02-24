@@ -44,6 +44,7 @@ class artificial_string : public std::string
         {
 
             str[0] = toupper(str[0]);
+
            return TRUE;
         }
         else
@@ -51,10 +52,10 @@ class artificial_string : public std::string
     }
 
 
-int len(artificial_string s)
-{
-    return s.str.size();   //To return the sting length
-}
+    int len(artificial_string s)
+    {
+        return s.str.size();   //To return the sting length
+    }
 
 
    bool upper()
@@ -90,5 +91,6 @@ else return NULL;
 
 
 };
+
 
 #endif
