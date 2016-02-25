@@ -72,6 +72,14 @@ class artificial_string : public std::string
 
    }
 
+       void lower()
+    {
+        int l = s.length();
+        for (int i = 0; i < l; s++)
+            s[i] = tolower(s[i]);
+    }
+    
+
 char max(artificial_string s)
 {int i=0,max=95;
     char c=NULL;
@@ -89,6 +97,10 @@ char max(artificial_string s)
 else return NULL;
 }
 
+int min(artificial_string s)
+{
+    return *min_element(s.begin(), s.end());
+}
 
 };
 
