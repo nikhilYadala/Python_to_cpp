@@ -37,15 +37,17 @@ class artificial_string : public std::string
 {
     string str;
     
-    bool captialize()    //String function for finding whether first letter is capital.
+    string captialize()    //String function for finding whether first letter is capital.
     {
 
         if (str.size())
         {
 
             str[0] = toupper(str[0]);
-
-           return TRUE;
+            int i;
+            while(str[i]!='\0')
+             str[i]=tolower(str[i]);  
+           return str;
         }
         else
         	return false;
@@ -58,7 +60,7 @@ class artificial_string : public std::string
     }
 
 
-   bool upper()
+   sting upper()
    {
     if(str.size())
     {int i=0;
@@ -66,7 +68,7 @@ class artificial_string : public std::string
         {str[i]=toupper(str[i]);            //To convert a string to capital character
             i++;
         }             
-        return true;
+        return str;
     }
     else return false;
 
@@ -89,8 +91,23 @@ char max(artificial_string s)
 else return NULL;
 }
 
+sting lower()
+{
+ if(str.size())
+ {int i=0;
+     while(str[i]!='\0')
+     {str[i]=tolower(str[i]);            //To convert a string to small case character
+         i++;
+     }             
+     return str;
+ }
+ else return false;
+
+}
 
 };
+
+
 
 
 #endif
