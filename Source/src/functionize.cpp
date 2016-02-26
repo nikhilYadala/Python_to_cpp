@@ -3,8 +3,8 @@
 #include<string.h>
 #include<iostream>
 
-#include "function_struct.h"
-#include "source_code.h"
+#include "../Header/include/function_struct.h"
+#include "../Header/include/source_code.h"
 #define max_line_length 500
 
 

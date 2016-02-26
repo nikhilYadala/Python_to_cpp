@@ -9,8 +9,8 @@
 #include<stdlib.h>
 
 
-#include "function_struct.h"
-#include "source_code.h"
+#include "../Header/include/function_struct.h"
+#include "../Header/include/source_code.h"
 
 
 void source_code::render_code()
