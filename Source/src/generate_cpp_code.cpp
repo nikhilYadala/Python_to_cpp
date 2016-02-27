@@ -4,8 +4,8 @@
 #include<iostream>	
 #include<map>
 
-#include "function_struct.h"
-#include "source_code.h"
+#include "../Header/include/function_struct.h"
+#include "../Header/include/source_code.h"
 
 //convert_to_cpp is defined in convert_to_cpp file
 void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );

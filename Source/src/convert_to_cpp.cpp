@@ -8,8 +8,8 @@
 #include<stdlib.h>
 
 
-#include "function_struct.h"
-#include "source_code.h"
+#include "../Header/include/function_struct.h"
+#include "../Header/include/source_code.h"
 
 
 bool is_symbol(char c){

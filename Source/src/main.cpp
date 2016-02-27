@@ -6,9 +6,9 @@
 #include<string.h>
 #define chunk 1024		//Chunk of bytes to be read at a time from file(source code)
 
-#include "supporting_libs.h"
-#include "function_struct.h"
-#include "source_code.h"
+#include "../Header/supporting_libs/supporting_libs.h"
+#include "../Header/include/function_struct.h"
+#include "../Header/include/source_code.h"
 
 void render_code(source_code &src);
 

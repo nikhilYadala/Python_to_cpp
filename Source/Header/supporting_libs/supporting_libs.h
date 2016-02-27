@@ -60,7 +60,7 @@ class artificial_string : public std::string
     }
 
 
-   sting upper()
+   string upper()
    {
     if(str.size())
     {int i=0;
@@ -73,6 +73,14 @@ class artificial_string : public std::string
     else return false;
 
    }
+
+       void lower()
+    {
+        int l = s.length();
+        for (int i = 0; i < l; s++)
+            s[i] = tolower(s[i]);
+    }
+  
 
 char max(artificial_string s)
 {int i=0,max=95;
@@ -91,7 +99,8 @@ char max(artificial_string s)
 else return NULL;
 }
 
-sting lower()
+
+string lower()
 {
  if(str.size())
  {int i=0;
@@ -102,12 +111,75 @@ sting lower()
      return str;
  }
  else return false;
+}
+
+int min(artificial_string s)
+{
+    return *min_element(s.begin(), s.end());
 
 }
 
+string swapcase()
+{if(str.size())
+    {int i=0;
+        while(str[i]!='\0')
+            {if(str[i]==isupper(s[i]))
+                str[i]=tolower(s[i]);             //function to swapcase a given string
+             else str[i]=toupper(s[i]); 
+             i++; 
+            }
+return str;
+    }
+else return false;
+}
+
+bool islower()
+{ if(str.size())
+    {int i=0,flag=0;
+         while(str[i]!='\0')
+            {if(str[i]==islower(str[i]))
+                i++;
+            else {flag=1;
+                break;}
+             }
+
+            if(flag==1) return false;
+            else return true;
+        }
+        else return false;
+    }
+
+    bool isupper()
+    { if(str.size())
+        {int i=0,flag=0;
+             while(str[i]!='\0')
+                {if(str[i]==isupper(str[i]))
+                    i++;
+                else {flag=1;
+                    break;}
+                 }
+
+                if(flag==1) return false;
+                else return true;
+            }
+            else return false;
+        }
+       
+bool isalpha()
+    { if(str.size())
+        {int i=0,flag=0;
+             while(str[i]!='\0')
+                {if(str[i]==isalpha(str[i]))
+                    i++;
+                else {flag=1;
+                    break;}
+                 }
+
+                if(flag==1) return false;
+                else return true;
+            }
+            else return false;
+        }
 };
-
-
-
 
 #endif
