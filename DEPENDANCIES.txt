@@ -1,0 +1,19 @@
+The list of Depnendancies in ordewr to run this "Python" to "C++" translator is :
+
+1.The translator requires a version of ubuntu14.04 or higher .
+2.The device should also have g++ library already installed .
+3.The translator functions on g++4.8.4 version or higher.
+
+
+
+To build/modify the translator:
+
+1.In order to modify the code and then test it, the device should have googletest-1.7.0 version installed in it.
+
+
+Hardware Requirements:
+
+
+LIST OF ATTRIBUTIONS
+
+1.Googletest-1.7.0 has been used to test the code for this translator. 
