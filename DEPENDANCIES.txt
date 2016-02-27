@@ -8,6 +8,7 @@ The list of Dependencies in order to run this "Python to C++" translator is :
 To build/modify the translator:
 
 1.In order to modify the code and then test it, the device should have googletest-1.7.0 version installed in it.
+2.Developers are expected to have doxygen running on their system.
 
 
 Hardware Requirements:
@@ -16,3 +17,4 @@ Hardware Requirements:
 LIST OF ATTRIBUTIONS
 
 1.Googletest-1.7.0 has been used to test the code for this translator. 
+2.Doxygen - Documentation framework is for code documentation.
