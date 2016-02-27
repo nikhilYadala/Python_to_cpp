@@ -17,4 +17,4 @@ Hardware Requirements:
 LIST OF ATTRIBUTIONS
 
 1.Googletest-1.7.0 has been used to test the code for this translator. 
-2.Doxygen - Documentation framework is for code documentation.
+2.This project uses Doxygen documentation generation tool for automatic documentation.
