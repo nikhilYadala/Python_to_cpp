@@ -126,8 +126,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
 	
-
-	_function->return_type="";	
+	
 		
 
 	for(unsigned long int i=start;i<=end;)
@@ -141,9 +140,9 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		std::vector< std::string >::iterator itr=tokens.begin();
 		
-		if(*itr=="if")
+		if(*itr=="if" || *itr == "elif")
 		{
-
+			std::vector< std::string >::iterator if_or_elif = itr; 
 			itr++;
 			bool is_not=0;
 			if(*itr=="not")
@@ -159,11 +158,14 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			while(*itr!=":")
 				expr.append(*(itr++));
 			
-			converted_code.append((size_t)lines[i].second,' ');
-			converted_code.append("if(");
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			if( *if_or_elif == "if")
+				converted_code.append("if(");
+			else converted_code.append("else if(");		
 			converted_code.append(expr);
 			converted_code.append(")\n");
-			converted_code.append((size_t)lines[i].second,' ');
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			int spaces = (size_t)lines[i].second;
 			converted_code.append("{\n");
 			
 			int space_count=lines[i].second,st=i;
@@ -174,7 +176,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			convert_to_cpp(st+1,i-1,lines,snippet,_function,variables);
 			converted_code.append(snippet);
 			
-			converted_code.append((size_t)lines[st].second,' ');
+			converted_code.append(spaces*tab_size,' ');
 			converted_code.append("}\n");
 			//i already incremented while changing lines
 			continue;
@@ -187,7 +189,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 		{
 
 			itr++;
-			converted_code.append((size_t)lines[i].second,' ');
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("std::cout<<");
 			int f=1;
 			while(itr!=tokens.end())
@@ -206,7 +208,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		if(*itr=="return")
 		{
-			converted_code.append((size_t)lines[i].second,' ');
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("return ");
 			std::string expr="";
 			while((++itr)!=tokens.end())
@@ -215,17 +217,21 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			
 			converted_code.append(expr);
 			converted_code.append(";\n");
-			if(expr_type(expr,variables)!="")
+			// std::cout<<"OKK";
+			if(expr_type(expr,variables)!=""){
 				_function->return_type=expr_type(expr,variables);
+				std::cout<<_function->return_type;
+			}
 			break;	//break in return as must be last line of every sensible function  
 		}
 
 		 if(*itr=="else")
 		 {
-		 	converted_code.append((size_t)lines[i].second,' ');
+		 	converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("else\n");
-		 	converted_code.append((size_t)lines[i].second,' ');
+		 	converted_code.append((size_t)lines[i].second*tab_size,' ');
 		 	converted_code.append("{\n");
+		 	int spaces = (size_t)lines[i].second;
 
 		 	int space_count=lines[i].second,st=i;			
 			while(lines[++i].second>space_count);				
@@ -233,10 +239,15 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			convert_to_cpp(st+1,i-1,lines,snippet,_function,variables);
 			converted_code.append(snippet);
 			
-			converted_code.append((size_t)lines[st].second,' ');
-			converted_code.append("}");
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("}\n");
 			////NOTE:- Every section puts \n at its end so no need to put one in each section's beginning
 		 	continue;
+		 }
+
+		 if(*itr=="elif")
+		 {
+
 		 }
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
@@ -254,7 +265,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
     		if(!is_function_call){
 			variables[v]=expr_type(expr,variables);
 			
-			converted_code.append((size_t)lines[i].second,' ');
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
 				converted_code.append(variables[v]);
 			converted_code.append(v);
@@ -263,7 +274,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append(";\n");
 			}
 			else{
-				converted_code.append((size_t)lines[i].second,' ');
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
 				converted_code.append(expr);
 				converted_code.append(";\n");
 

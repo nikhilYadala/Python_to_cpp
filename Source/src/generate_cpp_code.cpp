@@ -38,6 +38,7 @@ void source_code::generate_cpp_code()
 		{
 			converted_code.clear();
 			function_declaration _function;
+			_function.return_type="";
 			std::map< std::string,std::string > variables;	//name,pair(value,type)
 			convert_to_cpp(itr1->first,itr1->second,lines,converted_code,&_function,variables);
 			if(_function.return_type=="")

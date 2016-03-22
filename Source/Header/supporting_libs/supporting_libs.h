@@ -83,25 +83,25 @@ void lower()
 }
     
 
-char max()		
-{
-    int i=0,max=95;
-    char c=NULL;
-    if(str.size())
-    {
-        while(str[i]!='\0')                        // To find maximum alphabetical character 
-        {
-            if(str[i] > max && str[i]< 123)
-            {
-                c=str[i];
-                max=str[i];
-            }
-            i++;
-        }
-        return c;
-    }
-    else return NULL;
-}
+// char max()		
+// {
+//     int i=0,max=95;                  //This function is grossly insane(assigning NULL to char ) , correct it
+//     char c=NULL;
+//     if(str.size())
+//     {
+//         while(str[i]!='\0')                        // To find maximum alphabetical character 
+//         {
+//             if(str[i] > max && str[i]< 123)
+//             {
+//                 c=str[i];
+//                 max=str[i];
+//             }
+//             i++;
+//         }
+//         return c;
+//     }
+//     else return NULL;
+// }
 
 int min()
 {
