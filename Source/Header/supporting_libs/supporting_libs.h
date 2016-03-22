@@ -2,6 +2,7 @@
 #define supporting_libs
 
 #include<vector>
+#include<algorithm>
 #include<string>
 #include<string.h>
 #include<iostream>
@@ -35,7 +36,7 @@ bool hash_tables::insert(value_type &v)
 
 class artificial_string : public std::string
 {
-    string str;
+    std::string str;
     
     bool captialize()    //String function for finding whether first letter is capital.
     {
@@ -45,25 +46,27 @@ class artificial_string : public std::string
 
             str[0] = toupper(str[0]);
 
-           return TRUE;
+           return true;
         }
         else
         	return false;
     }
 
 
-    int len(artificial_string s)
+    int len()
     {
-        return s.str.size();   //To return the sting length
+        return str.size();   //To return the sting length
     }
 
 
    bool upper()
    {
     if(str.size())
-    {int i=0;
+    {
+        int i=0;
         while(str[i]!='\0')
-        {str[i]=toupper(str[i]);            //To convert a string to capital character
+        {
+            str[i]=toupper(str[i]);            //To convert a string to capital character
             i++;
         }             
         return true;
@@ -72,34 +75,37 @@ class artificial_string : public std::string
 
    }
 
-       void lower()
-    {
-        int l = s.length();
-        for (int i = 0; i < l; s++)
-            s[i] = tolower(s[i]);
-    }
+void lower()
+{
+    int l = str.length();
+    for (int i = 0; i < l; i++)
+        str[i] = tolower(str[i]);
+}
     
 
-char max(artificial_string s)
-{int i=0,max=95;
+char max()		
+{
+    int i=0,max=95;
     char c=NULL;
-    if(s.str.size())
-   { while(str[i]!='\0')                        // To find maximum alphabetical character 
-   {
-    if('str[i]' > max && 'str[i]'< 123)
+    if(str.size())
     {
-        c=str[i];
-        max='str[i]';
+        while(str[i]!='\0')                        // To find maximum alphabetical character 
+        {
+            if(str[i] > max && str[i]< 123)
+            {
+                c=str[i];
+                max=str[i];
+            }
+            i++;
+        }
+        return c;
     }
-    i++;
-}return c;
-}
-else return NULL;
+    else return NULL;
 }
 
-int min(artificial_string s)
+int min()
 {
-    return *min_element(s.begin(), s.end());
+    return *min_element(str.begin(), str.end());
 }
 
 };
