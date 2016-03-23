@@ -59,7 +59,7 @@ void source_code::functionize()
 					int space_count=itr->second;
 					int i1=itr-lines.begin(),i2;
 					while((++itr)->second>space_count);
-					i2=itr-lines.begin()-1;		
+					i2=itr-lines.begin()-1; 		
 					functions.push_back(int_pair(i1,i2));
 				}
 				else{

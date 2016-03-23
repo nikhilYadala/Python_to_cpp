@@ -44,7 +44,7 @@ void source_code::generate_cpp_code()
 			if(_function.return_type=="")
 					_function.return_type="void";		
 			
-			itr2->second=_function;
+			itr-2>second=_function;
 			itr2->first=converted_code;			
 			
 		}

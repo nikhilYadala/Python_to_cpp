@@ -21,13 +21,17 @@ public:
 char *file_name;
 std::vector< line_pair > lines;
 std::vector< int_pair > functions;
+std::vector< int_par > classes; //each value gives the start and the end line of a given class
 std::vector< std::pair< std::string,function_declaration > > generated_cpp_code;
+std::vector< std::pair< std::string,class_declaration > > generated_cpp_classes;
 
 
 	 source_code(std::string& st) : code(st){
 	}
 	 void functionize();
+	 void make_classes();       //separating classes from the python code.
 	 void generate_cpp_code();
+	 void generated_cpp_classes();
 	 void render_code();	//write the generated cpp code to file
 	// const bool is_valid(source_code &);
 };

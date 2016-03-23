@@ -38,7 +38,7 @@ class artificial_string : public std::string
 {
     std::string str;
     
-    bool captialize()    //String function for finding whether first letter is capital.
+    string captialize()    //String function for finding whether first letter is capital.
     {
 
         if (str.size())
@@ -47,6 +47,7 @@ class artificial_string : public std::string
             str[0] = toupper(str[0]);
 
            return true;
+
         }
         else
         	return false;
@@ -59,7 +60,7 @@ class artificial_string : public std::string
     }
 
 
-   bool upper()
+   string upper()
    {
     if(str.size())
     {
@@ -69,7 +70,7 @@ class artificial_string : public std::string
             str[i]=toupper(str[i]);            //To convert a string to capital character
             i++;
         }             
-        return true;
+        return str;
     }
     else return false;
 
@@ -82,6 +83,7 @@ void lower()
         str[i] = tolower(str[i]);
 }
     
+
 
 // char max()		
 // {
@@ -108,7 +110,67 @@ int min()
     return *min_element(str.begin(), str.end());
 }
 
-};
+string swapcase()
+{if(str.size())
+    {int i=0;
+        while(str[i]!='\0')
+            {if(str[i]==isupper(s[i]))
+                str[i]=tolower(s[i]);             //function to swapcase a given string
+             else str[i]=toupper(s[i]); 
+             i++; 
+            }
+return str;
+    }
+else return false;
+}
 
+bool islower()
+{ if(str.size())
+    {int i=0,flag=0;
+         while(str[i]!='\0')
+            {if(str[i]==islower(str[i]))
+                i++;
+            else {flag=1;
+                break;}
+             }
+
+            if(flag==1) return false;
+            else return true;
+        }
+        else return false;
+    }
+
+    bool isupper()
+    { if(str.size())
+        {int i=0,flag=0;
+             while(str[i]!='\0')
+                {if(str[i]==isupper(str[i]))
+                    i++;
+                else {flag=1;
+                    break;}
+                 }
+
+                if(flag==1) return false;
+                else return true;
+            }
+            else return false;
+        }
+       
+bool isalpha()
+    { if(str.size())
+        {int i=0,flag=0;
+             while(str[i]!='\0')
+                {if(str[i]==isalpha(str[i]))
+                    i++;
+                else {flag=1;
+                    break;}
+                 }
+
+                if(flag==1) return false;
+                else return true;
+            }
+            else return false;
+        }
+};
 
 #endif
