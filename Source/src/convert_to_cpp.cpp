@@ -245,10 +245,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 		 	continue;
 		 }
 
-		 if(*itr=="elif")
-		 {
-
-		 }
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
 
@@ -268,6 +264,8 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
 				converted_code.append(variables[v]);
+			converted_code.append(expr_type(v,variables));	
+			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
 			converted_code.append(expr);
