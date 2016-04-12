@@ -1,9 +1,9 @@
-#include<vector>
-#include<iostream>
-#include<stdio.h>
-#include<string>
-#include<stdlib.h>
-#include<string.h>
+#include <vector>
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include <stdlib.h>
+#include <string.h>
 #define chunk 1024		//Chunk of bytes to be read at a time from file(source code)
 
 #include "../Header/supporting_libs/supporting_libs.h"
@@ -43,10 +43,18 @@ int main(int argc, char *argv[])
 
 	source_code input_code(input_src);
 	input_code.file_name=f;
+	std::cout<<f<<"\n";
 	input_code.functionize();
-	input_code.make_classes();
+	std::cout<<f<<"\n";
+	// input_code.make_classes();
+	// std::cout<<f<<"\n";
+
 	input_code.generate_cpp_code();
-	input_code.genrated_cpp_classes();
+	std::cout<<f<<"\n";
+
+	// input_code.generate_cpp_classes();
+	// std::cout<<f<<"\n";
+	
 	input_code.render_code();
 
 

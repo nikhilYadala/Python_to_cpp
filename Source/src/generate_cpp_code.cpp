@@ -1,8 +1,8 @@
-#include<vector>
-#include<string>
-#include<string.h>
-#include<iostream>	
-#include<map>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <iostream>	
+#include <map>
 
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
@@ -38,13 +38,12 @@ void source_code::generate_cpp_code()
 		{
 			converted_code.clear();
 			function_declaration _function;
-			_function.return_type="";
 			std::map< std::string,std::string > variables;	//name,pair(value,type)
 			convert_to_cpp(itr1->first,itr1->second,lines,converted_code,&_function,variables);
 			if(_function.return_type=="")
 					_function.return_type="void";		
 			
-			itr-2>second=_function;
+			itr2->second=_function;
 			itr2->first=converted_code;			
 			
 		}

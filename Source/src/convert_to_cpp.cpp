@@ -11,6 +11,25 @@
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
 
+// std::string eval_expr(std::string& s)
+// {
+// 	std::string evaled = ""
+// 	if(s.begin()=='"') {
+// 		auto subject = "";
+// 		auto itr = s.begin()+1;
+// 		for(;*itr!='"';++itr)
+// 			subject.append(*itr);
+
+// 		evaled.append("string(\""+subject+"\")")
+// 		subject = "";
+
+// 		for(;itr!=s.end();++itr)
+// 			evaled.append(*itr);
+// 	}
+// 	if(evaled == "")
+// 		evaled  = s;
+// 	return evaled;
+// }
 
 bool is_symbol(char c){
 	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
@@ -129,12 +148,12 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	
 	
 		
-
+	std::cout<<"OKKK12\n";	
 	for(unsigned long int i=start;i<=end;)
 	{	
 		tokens.clear();
 		break_into_words(lines[i].first,tokens);
-			
+			std::cout<<lines[i].first<<"\n";
 		// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
 		// 		std::	cout<<"---"<<*itr<<"-----";
 		// 	std::cout<<"\n\n";
@@ -188,7 +207,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		if(*itr=="print")
 		{
-
+			std::cout<<"OKKK11\n";
 			itr++;
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("std::cout<<");
@@ -246,6 +265,40 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 		 	continue;
 		 }
 
+		else if (*itr=="while")
+		{
+			itr++;
+			bool is_not=0;
+			if(*itr=="not")
+				{
+					is_not=1;
+					itr++;
+				}
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			converted_code.append("while(");
+			if(is_not) converted_code.append("!");
+			while(*itr!=":")
+				converted_code.append(*itr);
+			converted_code.append(")\n");
+					
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			int spaces = (size_t)lines[i].second;
+			converted_code.append("{\n");
+			
+			int space_count=lines[i].second,st=i;
+			
+			while(lines[++i].second>space_count);
+				
+			std::string snippet;
+			convert_to_cpp(st+1,i-1,lines,snippet,_function,variables);
+			converted_code.append(snippet);
+			
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("}\n");
+			//i already incremented while changing lines
+			continue;
+		}
+
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
 
@@ -288,4 +341,4 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	}		
 
 }
-}
+

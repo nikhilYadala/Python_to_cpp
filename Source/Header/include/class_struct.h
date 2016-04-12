@@ -6,7 +6,7 @@
 
 struct class_declaration{
 	std::string name;
-	std::int num_base_func;//stores num of base functions (inheritance)
+	int num_base_func;//stores num of base functions (inheritance)
     std::vector< std::string > base_functions;
 
 };

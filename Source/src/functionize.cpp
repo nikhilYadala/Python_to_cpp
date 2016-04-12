@@ -1,7 +1,7 @@
-#include<vector>
-#include<string>
-#include<string.h>
-#include<iostream>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <iostream>
 
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
