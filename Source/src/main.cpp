@@ -43,14 +43,12 @@ int main(int argc, char *argv[])
 
 	source_code input_code(input_src);
 	input_code.file_name=f;
-	std::cout<<f<<"\n";
 	input_code.functionize();
-	std::cout<<f<<"\n";
 	// input_code.make_classes();
 	// std::cout<<f<<"\n";
 
 	input_code.generate_cpp_code();
-	std::cout<<f<<"\n";
+
 
 	// input_code.generate_cpp_classes();
 	// std::cout<<f<<"\n";

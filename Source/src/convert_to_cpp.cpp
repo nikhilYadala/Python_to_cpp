@@ -116,20 +116,21 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	
 	break_into_words(lines[start].first,tokens);
 	
-	
+
 	if(tokens[0]=="def")
 	{
+
 		_function->name=tokens[1];	
 		std::vector< std::string >::iterator itr;
 		
 
 		for(itr=tokens.begin()+3;;itr=itr+2){
-			_function->args.push_back(std::pair< std::string,std::string >(*itr,""));
-			if(*(itr+1)==")")
+			if(*(itr)==")")
 				break;
+			_function->args.push_back(std::pair< std::string,std::string >(*itr,""));
 		}
 
-		while(*(itr++)!=":");	//skip : of funcction declaration
+		while(*(itr++)!=":");	//skip ':' of function declaration
 		
 		//After every function declaration put a series of example values
 
@@ -142,19 +143,17 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			
 		}
 	}
-
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
 	
 	
 		
-	std::cout<<"OKKK12\n";	
-	for(unsigned long int i=start;i<=end;)
-	{	
+
+	for(unsigned long int i=start;i<=end;)						//start from start only not +1 as it will miss cases of outside															 
+	{															//function code 
 		tokens.clear();
 		break_into_words(lines[i].first,tokens);
-			std::cout<<lines[i].first<<"\n";
-		// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
+				// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
 		// 		std::	cout<<"---"<<*itr<<"-----";
 		// 	std::cout<<"\n\n";
 
@@ -207,7 +206,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		if(*itr=="print")
 		{
-			std::cout<<"OKKK11\n";
 			itr++;
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("std::cout<<");
@@ -240,7 +238,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			// std::cout<<"OKK";
 			if(expr_type(expr,variables)!=""){
 				_function->return_type=expr_type(expr,variables);
-				std::cout<<_function->return_type;
 			}
 			break;	//break in return as must be last line of every sensible function  
 		}
