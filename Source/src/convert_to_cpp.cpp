@@ -122,9 +122,10 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		_function->name=tokens[1];	
 		std::vector< std::string >::iterator itr;
-		
 
-		for(itr=tokens.begin()+3;;itr=itr+2){
+		for(itr=tokens.begin()+3;;itr++){
+			if(*itr == ",")
+				continue;
 			if(*(itr)==")")
 				break;
 			_function->args.push_back(std::pair< std::string,std::string >(*itr,""));
@@ -146,11 +147,10 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
 	
-	
 		
 
 	for(unsigned long int i=start;i<=end;)						//start from start only not +1 as it will miss cases of outside															 
-	{															//function code 
+	{	
 		tokens.clear();
 		break_into_words(lines[i].first,tokens);
 				// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
@@ -298,7 +298,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
-
 			std::string v=*itr;
 			std::string expr="";
 			bool is_function_call=1;
@@ -333,7 +332,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			continue;
 
 		}	 
-		i++;
+		i++;							// if nothing gets caught
 	
 	}		
 

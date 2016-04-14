@@ -40,12 +40,13 @@ void source_code::generate_cpp_code()
 			function_declaration _function;
 			std::map< std::string,std::string > variables;	//name,pair(value,type)
 			convert_to_cpp(itr1->first,itr1->second,lines,converted_code,&_function,variables);
+						
 			if(_function.return_type=="")
 					_function.return_type="void";		
 			
-			itr2->second=_function;
+			itr2->second=_function;	
 			itr2->first=converted_code;	
-			
+
 		}
 
 	// for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.begin();itr!=generated_cpp_code.end();++itr)
