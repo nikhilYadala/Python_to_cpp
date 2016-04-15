@@ -27,7 +27,14 @@ int s=strlen(file_name);
 	
 	std::string decl;
 	decl.append("#include \"supporting_libs.h\"\n\n");
-	for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.end()-1;;--itr)
+
+	std::vector< std::pair< std::string,function_declaration > >::iterator itr = generated_cpp_code.begin();
+
+
+
+
+// For remaining functions iterate over the generated_cpp_code vector
+	for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.begin()+1;itr!=generated_cpp_code.end();++itr)
 		{
 			 decl.append(itr->second.return_type);
 			 decl.append(" ");
@@ -48,8 +55,28 @@ int s=strlen(file_name);
 			decl.append(itr->first);
 			decl.append("\n}\n\n");
 
-			if(itr==generated_cpp_code.begin())break;
 		}
+
+			// For main function 
+		    	decl.append(itr->second.return_type);
+			 decl.append(" ");
+			 decl.append(itr->second.name);
+			 decl.append("(");
+			 for(std::vector< string_pair >::iterator i=itr->second.args.begin();i!=itr->second.args.end();++i)
+			 {
+			 	decl.append(i->second);
+			 	decl.append(" ");
+			 	decl.append(i->first);
+			 	decl.append(",");
+			 }
+			 if(*(decl.end()-1) == ',')
+			 	*(decl.end()-1)=')';
+			 else  decl.append(")");
+			 
+			decl.append("\n{\n");
+			decl.append(itr->first);
+			decl.append("\n}\n\n");
+
 
 		cpp_file<<decl;
 }
