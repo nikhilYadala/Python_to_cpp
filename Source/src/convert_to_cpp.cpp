@@ -11,25 +11,25 @@
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
 
-// std::string eval_expr(std::string& s)
-// {
-// 	std::string evaled = ""
-// 	if(s.begin()=='"') {
-// 		auto subject = "";
-// 		auto itr = s.begin()+1;
-// 		for(;*itr!='"';++itr)
-// 			subject.append(*itr);
+std::string eval_expr(std::string& s)
+{
+	std::string evaled = "";
+	if(*s.begin()=='"') {
+		std::string subject = "";
+		std::string::iterator itr = s.begin()+1;
+		for(;*itr!='"';++itr)
+			subject.push_back(*itr);
 
-// 		evaled.append("string(\""+subject+"\")")
-// 		subject = "";
+		evaled.append("string(\""+subject+"\")");
+		subject = "";
 
-// 		for(;itr!=s.end();++itr)
-// 			evaled.append(*itr);
-// 	}
-// 	if(evaled == "")
-// 		evaled  = s;
-// 	return evaled;
-// }
+		for(;itr!=s.end();++itr)
+			evaled.push_back(*itr);
+	}
+	if(evaled == "")
+		evaled  = s;
+	return evaled;
+}
 
 bool is_symbol(char c){
 	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";

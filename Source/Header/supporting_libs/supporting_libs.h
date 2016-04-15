@@ -36,9 +36,30 @@ bool hash_tables::insert(value_type &v)
 
 class artificial_string : public std::string
 {
+private:
     std::string str;
     
-    bool captialize()    //String function for finding whether first letter is capital.
+public:
+
+    friend std::ostream &operator<<( std::ostream &output, 
+                                       const artificial_string &context )
+      { 
+         output << context.str;
+         return output;            
+      }
+
+    friend std::istream &operator>>( std::istream  &input, artificial_string &context )
+      { 
+         input >> context.str;
+         return input;            
+      }
+
+
+    artificial_string(std::string s){
+        str = s;
+    }
+
+    bool capitalize()    //String function for finding whether first letter is capital.
     {
 
         if (str.size())
