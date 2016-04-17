@@ -20,14 +20,15 @@ std::string eval_expr(std::string& s)
 		for(;*itr!='"';++itr)
 			subject.push_back(*itr);
 
-		evaled.append("string(\""+subject+"\")");
-		subject = "";
+		evaled.append("artificial_string(\""+subject+"\")");
 
+		itr++;
 		for(;itr!=s.end();++itr)
 			evaled.push_back(*itr);
 	}
 	if(evaled == "")
 		evaled  = s;
+
 	return evaled;
 }
 
@@ -44,14 +45,14 @@ bool is_symbol(char c){
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
 	if(expr[0]=='"')
-		return "std::string";
+		return "artificial_string";
 	if(isdigit(expr[0]))
 	{
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
 				return "double";
 		return "long int";
-	}
+	}	
 	std::string::iterator itr=expr.begin();
 	std::string first_variable;
 	while(itr!=expr.end()){
@@ -242,7 +243,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			break;	//break in return as must be last line of every sensible function  
 		}
 
-		 if(*itr=="else")
+		if(*itr=="else")
 		 {
 		 	converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("else\n");
@@ -307,9 +308,10 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			}
 			while(itr!=tokens.end())
 				expr.append(*itr++);
-    		
-    		if(!is_function_call){
-			variables[v]=expr_type(expr,variables);
+    		expr = eval_expr(expr);
+
+			if(!is_function_call){
+				variables[v]=expr_type(expr,variables);
 			
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
@@ -318,6 +320,8 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
+			    		std::cout<<"Evaled  -- "<<expr<<"\n";
+
 			converted_code.append(expr);
 			converted_code.append(";\n");
 			}

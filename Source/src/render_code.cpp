@@ -15,7 +15,7 @@
 
 void source_code::render_code()
 {
-int s=strlen(file_name);
+	int s=strlen(file_name);
 	char *file_to_write=(char *)malloc(s+5);
 	*file_to_write='\0';
 	strcat(file_to_write,file_name);
@@ -33,7 +33,7 @@ int s=strlen(file_name);
 
 
 
-// For remaining functions iterate over the generated_cpp_code vector
+// For remaining functions iterate over the generated_cpp_code vec	tor
 	for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.begin()+1;itr!=generated_cpp_code.end();++itr)
 		{
 			 decl.append(itr->second.return_type);

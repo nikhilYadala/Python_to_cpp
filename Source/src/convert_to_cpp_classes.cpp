@@ -14,7 +14,7 @@
 
 
 /**** FUNCTION TO BE INHERITED FROM GENERATE_CPP_CODE.CPP******/
-/**** cURRENLY, THE CODE IS JUST BEING COPIED***********/
+/**** CURRENLY, THE CODE IS JUST BEING COPIED***********/
 bool is_symbol_(char c){
 	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
 

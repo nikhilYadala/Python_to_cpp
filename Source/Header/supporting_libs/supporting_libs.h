@@ -36,10 +36,22 @@ bool hash_tables::insert(value_type &v)
 
 class artificial_string : public std::string
 {
-private:
-    std::string str;
-    
 public:
+    std::string str;
+
+    artificial_string operator+(const artificial_string& s)
+    {
+        return artificial_string(this->str.append(s.str));
+    }
+
+    artificial_string operator+(const std::string& s)
+    {
+        return artificial_string(this->str.append(s));
+    }
+    artificial_string operator+(const char* s)
+    {
+        return artificial_string(this->str.append(s));
+    }
 
     friend std::ostream &operator<<( std::ostream &output, 
                                        const artificial_string &context )

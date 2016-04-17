@@ -46,8 +46,7 @@ int main(int argc, char *argv[])
 	input_code.functionize();
 	// input_code.make_classes();
 	// std::cout<<f<<"\n";
-	for(std::vector< int_pair >::iterator itr = input_code.functions.begin();itr!=input_code.functions.end();++itr)
-		std::cout<<">>>  "<<itr->first<<"     "<<itr->second<<"  <<<<<<\n";
+	
 	input_code.generate_cpp_code();
 
 
