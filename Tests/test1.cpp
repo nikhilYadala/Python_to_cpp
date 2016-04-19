@@ -6,131 +6,144 @@
 #include<string>
 
 TEST (capitialize, trivialnull) {
-//EXPECT_STREQ(false,"NULL".capitialize());                                   
-EXPECT_STREQ("@8.41#$","@8.41#$".capitialize());                    
+	artificial_string abc= artificial_string("@8.41#$");
+	abc.capitalize();
+    EXPECT_STREQ("@8.41#$",abc.str.c_str()); 
+    abc.str="";
+    EXPECT_STREQ("",abc.str.c_str());                   
 }
 
 TEST (capitialize, various_strings) {
-ASSERT_STREQ("Abhishek","abhishek".capitialize());                      //To Test the function capitalize
-ASSERT_STREQ("India_is_my_country","india_is_my_country".capitialize());
-ASSERT_STREQ("We like CS242","We like CS242".capitialize());
+artificial_string abc= artificial_string("abhishek");
+abc.capitalize();
+ASSERT_STREQ("Abhishek",abc.str.c_str());                      //To Test the function capitalize
+abc.str="We like CS242";
+ASSERT_STREQ("We like CS242",abc.str.c_str());
 }
 //==================================================================================================
 
 TEST (len, trivialnull){
-	EXPECT_EQ(0,len(NULL));
+	artificial_string abc= artificial_string("");
+	EXPECT_EQ(0,abc.len());
 }
 
 TEST (len, otherlengths){                                              //To Test the function len
-	ASSERT_EQ(9,len("123456789"));
-	ASSERT_EQ(32,len("This is Python to C++ translator"));
-	ASSERT_EQ(7,len("!@#$^&("));
+	artificial_string abc= artificial_string("123456789");
+	ASSERT_EQ(9,abc.len());
+	abc.str="This is Python to C++ translator";
+	ASSERT_EQ(32,abc.len());
+	abc.str="!@#$^&(";
+	ASSERT_EQ(7,abc.len());
 }
 //===================================================================================================
 
 TEST (upper, trivialnull){
-	EXPECT_STREQ(false,NULL.upper());
-EXPECT_STREQ("@8.41#$","@8.41#$".upper());                    
+	artificial_string abc= artificial_string("");
+	abc.upper();
+	EXPECT_STREQ("",abc.str.c_str());
+	abc.str="@8.41#$";
+	abc.upper();
+EXPECT_STREQ("@8.41#$",abc.str.c_str());                    
 }
 
 TEST (upper, various_strings) {
-std::string std_output="india_is_my_country";
-ASSERT_STREQ("ABHISHEK","abhishek".upper());                      //To Test the function upper
-ASSERT_STREQ("INDIA_IS_MY_COUNTRY",std_output.upper());
-ASSERT_STREQ("WE LIKE CS242","We like CS242".upper());
+artificial_string abc= artificial_string("abhishek");
+abc.upper();
+ASSERT_STREQ("ABHISHEK",abc.str.c_str());                      //To Test the function upper
+abc.str="We like CS242";
+abc.upper();
+ASSERT_STREQ("WE LIKE CS242",abc.str.c_str());
 }
 //===================================================================================================
 
 TEST (max, trivialnull){
-//	EXPECT_STREQ(NULL,max("@!@#443243646"));
-	EXPECT_STREQ(NULL,max(NULL));
+	artificial_string abc= artificial_string("@!@#443243646");
+	EXPECT_EQ(' ',abc.max());
+	abc.str="";
+	EXPECT_EQ(' ',abc.max());
 }
                                                                         
-Test (max, diffstrings){                                       //To Test the max function
-ASSERT_STREQ("a",max("a2312300AZ"));
-ASSERT_STREQ("z",max("zZaA@!"));
-ASSERT_STREQ("s",max("iamms"));
-//ASSERT_STREQ(NULL,max("2837!&25JGU"));
-ASSERT_STREQ("T",max("AGILEMETHOD"));
+
+TEST (max, diffstrings) {                                       //To Test the max function
+	artificial_string abc= artificial_string("a2312300AZ");
+	EXPECT_EQ('a',abc.max());
+	abc.str="zZaA@!";
+	ASSERT_EQ('z',abc.max());
+	abc.str="iamms";
+	ASSERT_EQ('s',abc.max());
+	abc.str="2837!&25JGU";
+	ASSERT_EQ(' ',abc.max());
+	abc.str="AGILEMETHOD";
+	ASSERT_EQ(' ',abc.max());
 }
 //====================================================================================================
 
-TEST (upper, trivialnull){
-	EXPECT_STREQ(false,NULL.capitialize());
-EXPECT_STREQ("@8.41#$","@8.41#$".capitialize());                    
+TEST (lower, trivialnull){
+	artificial_string abc= artificial_string("");
+	abc.lower();
+	EXPECT_STREQ("",abc.str.c_str());
+	abc.str="@8.41#$";
+	abc.lower();
+EXPECT_STREQ("@8.41#$",abc.str.c_str());                    
 }
 
-TEST (upper, various_strings) {
-ASSERT_STREQ("abhishek","abhishek".capitialize());                      //To Test the function lower
-ASSERT_STREQ("india_is_my_country","INDIA_IS_MY_COUNTRY".capitialize());
-ASSERT_STREQ("we like cs242","We Like CS242".capitialize());
+TEST (lower, various_strings) {
+	artificial_string abc= artificial_string("abhishek");
+	abc.lower();
+ASSERT_STREQ("abhishek",abc.str.c_str());                      //To Test the function lower
+	abc.str="INDIA_IS_MY_COUNTRY";
+	abc.lower();
+ASSERT_STREQ("india_is_my_country",abc.str.c_str());
+	abc.str="We Like CS242";
+	abc.lower();
+ASSERT_STREQ("we like cs242",abc.str.c_str());
 }
 
 //====================================================================================================
 
 TEST (min, trivialnull){
-//	EXPECT_STREQ(NULL,max("@!@#443243646"));
-	EXPECT_STREQ(NULL,max(NULL));
+artificial_string abc= artificial_string("@!@#443243646");
+	EXPECT_EQ(' ',abc.min());
+	abc.str="";
+	EXPECT_EQ(' ',abc.min());
 }
                                                                         
-Test (min, diffstrings){                                       //To Test the min function
-ASSERT_STREQ(0,max("a2312300AZ"));
-ASSERT_STREQ("!",max("zZaA@!"));
-ASSERT_STREQ("a",max("iamms"));
-//ASSERT_STREQ(NULL,max("2837!&25JGU"));
-ASSERT_STREQ("A",max("AGILEMETHOD"));
-}
+TEST (min, diffstrings){                                       //To Test the min function
+artificial_string abc= artificial_string("a2312300AZ");
+ASSERT_EQ('a',abc.min());
+abc.str="zZaA@!";
+	ASSERT_EQ('a',abc.min());
+	abc.str="iamms";
+	ASSERT_EQ('a',abc.min());
+	abc.str="2837!&25JGU";
+	ASSERT_EQ(' ',abc.min());
+	abc.str="AGILEMETHOD";
+	ASSERT_EQ(' ',abc.min());
+}	
 //====================================================================================================
 
 TEST (swapcase, trivialnull){
-	EXPECT_STREQ(NULL,""swapcase());
+artificial_string abc= artificial_string("");
+	abc.swapcase();
+	EXPECT_STREQ("",abc.str.c_str());
 }
 
 TEST (swapcase, diffstrings){
-	ASSERT_STREQ("This Is Great",swapcase("tHIS iS gREAT"));       //To test the swapcase function
-	ASSERT_STREQ("abcdefghiJKLMN",swapcase("ABCDEFGHIjklmn"));
-	ASSERT_STREQ("!@# 456 asd QWE",swapcase("!@# 456 ASD qwe"));
+	artificial_string abc = artificial_string("tHIS iS gREAT");
+	abc.swapcase();
+	EXPECT_STREQ("This Is Great",abc.str.c_str());       //To test the swapcase function
+	//artificial_string abc = artificial_string("ABCDEFGHIjklmn");
+	abc.str="ABCDEFGHIjklm";
+	abc.swapcase();
+	ASSERT_STREQ("abcdefghiJKLM",abc.str.c_str());
+    abc.str="!@# 456 ASD qwe";
+    //artificial_string abc = artificial_string("!@# 456 ASD qwe");
+	abc.swapcase();
+	ASSERT_STREQ("!@# 456 asd QWE",abc.str.c_str());
 }
 //===================================================================================================
-
-TEST (islower, trivialcases){
-	EXPECT_FALSE("".islower());
-}
-
-TEST(islower, diffcases){
-	ASSERT_TRUE("cppiscool".islower());                      //To test the islower function
-	ASSERT_FALSE("cpp_is_cool".islower());
-	ASSERT_FALSE("123&*".islower());
-	ASSERT_FALSE("CPPISCOOL".islower());
-}
-//==============================================================================================================
-
-TEST (isupper, trivialcases){
-	EXPECT_FALSE("".isupper());
-}
-
-TEST(isupper, diffcases){
-	ASSERT_FALSE("cppiscool".isupper());                      //To test the isupper function
-	ASSERT_FALSE("123&*".isupper());
-	ASSERT_TRUE("CPPISCOOL".isupper());
-	ASSERT_FALSE("CPP_IS_COOL".isupper());
-}
-//=============================================================================================================
-
-TEST (isalpha, trivialcases){
-	EXPECT_FALSE("".isalpha());
-}
-
-TEST(isalpha, diffcases){
-	ASSERT_TRUE("cppiscool".isalpha());                      //To test the isalpha function
-	ASSERT_FALSE("123&*".isalpha());
-	ASSERT_TRUE("CPPISCOOL".isalpha());
-	ASSERT_TRUE("CPP_IS_COOL".isalpha());
-}
-//======================================================================================================================
 
 int main(int argc, char **argv) {
 ::testing::InitGoogleTest(&argc, argv);
 return RUN_ALL_TESTS();
 }
-

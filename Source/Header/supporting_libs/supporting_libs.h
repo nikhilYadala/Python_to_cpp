@@ -39,6 +39,7 @@ class artificial_string : public std::string
 public:
     std::string str;
 
+
     artificial_string operator+(const artificial_string& s)
     {
         return artificial_string(this->str.append(s.str));
@@ -136,12 +137,41 @@ char max()
     else return ' ';
 }
 
-int min()
+char min()      
 {
-    return *min_element(str.begin(), str.end());
+    int i=0,min=123;
+    char c=' ';
+    if(str.size())
+    {
+        while(str[i]!='\0')                        // To find maximum alphabetical character 
+        {
+            if(str[i] < min && str[i]> 95)
+            {
+                c=str[i];
+                min=str[i];
+            }
+            i++;
+        }
+        return c;
+    }
+    else return ' ';
+}
+
+std::string swapcase()
+{if(str.size())
+    {int i=0;
+        while(str[i]!='\0')
+        {
+        if(isupper(str[i]))
+            str[i]=tolower(str[i]);             //function to swapcase a given string
+        else str[i]=toupper(str[i]); 
+        i++; 
+        }
+return str;
+    }
+else return std::string("") ;
 }
 
 };
-
 
 #endif
