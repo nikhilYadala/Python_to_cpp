@@ -57,8 +57,8 @@ int main(int argc, char *argv[])
 
 
 
-	// for(std::string::iterator itr=input_src.begin();itr!=input_src.end();++itr)
-		// std::cout<<*itr;
+	for(std::vector< line_pair >::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
+		std::cout<<itr->first<<"\n";
 
 	return 0;
 
