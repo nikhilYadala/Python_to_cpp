@@ -32,6 +32,20 @@ void source_code::render_code()
 
 
 
+	/*----------------------------------------
+
+	for(std::vector< std::pair< std::string,class_declaration > >::iterator itr=generated_cpp_classes.begin();itr!=generated_cpp_classes.end();++itr)
+		{
+		 	decl.append("class");
+			decl.append(" ");
+			decl.append(itr->second.name);		 
+			decl.append("\n{\n");
+			decl.append(itr->first);
+			decl.append("\n}\n\n");
+
+		}
+
+	----------------------------*/
 
 // For remaining functions iterate over the generated_cpp_code vec	tor
 	for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.begin()+1;itr!=generated_cpp_code.end();++itr)

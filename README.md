@@ -19,5 +19,5 @@ Developer Docs
 If you're a developer look to hack into the code,welcome!
 
 Most of the code resides in Source directory with no prior dependencies involved except for
-Google C++ testing framework.Code is very much commented and self-explanatory,still if you want to help with 
+Google C++ testing framework.Code is very much commented and self-explanatory, still if you want to help with 
 documentation or code please have a look at repo.
