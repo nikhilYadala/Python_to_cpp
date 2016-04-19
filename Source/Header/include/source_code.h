@@ -29,13 +29,13 @@ std::vector< std::pair< std::string,function_declaration > > generated_cpp_code;
 std::vector< std::pair< std::string,class_declaration > > generated_cpp_classes;
 
 
-	 source_code(std::string& st) : code(st){
-	}
-	 void functionize();
-	 void make_classes();       //separating classes from the python code.
-	 void generate_cpp_code();
-	 void generate_cpp_classes();
-	 void render_code();	//write the generated cpp code to file
+ source_code(std::string& st) : code(st){
+}
+ void functionize();
+ void make_classes();       //separating classes from the python code.
+ void generate_cpp_code();
+ void generate_cpp_classes();
+ void render_code();	//write the generated cpp code to file
 	// const bool is_valid(source_code &);
 };
 
