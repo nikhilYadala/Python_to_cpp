@@ -68,7 +68,23 @@ void source_code::functionize()
 					i2=itr-lines.begin()-1; 		
 					functions.push_back(int_pair(i1,i2));
 				}
-				else{
+
+			if(itr->first[0]=='c'&&itr->first[1]=='l'&&itr->first[2]=='a'&&itr->first[3]=='s'&&itr->first[4]=='s')
+	        {
+
+	            //classes inherited are taken care off in convert_to_cpp_classes.cpp
+	            
+	        	int space_count=itr->second;
+	        	int i1,i2;
+	        	i1=itr-lines.begin();
+	        	while((++itr)->second > space_count);
+				i2=itr-lines.begin()-1;
+
+				classes.push_back(int_pair(i1,i2));
+
+            }
+				else 
+				{
 					only_functions=0;
 					int i1=itr-lines.begin(),i2=lines.size()-1;
 					functions[0]=int_pair(i1,i2);	

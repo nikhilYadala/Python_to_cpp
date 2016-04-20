@@ -1,11 +1,11 @@
 
-#include<vector>
-#include<string>
-#include<string.h>
-#include<iostream>
-#include<ctype.h>
-#include<map>
-#include<stdlib.h>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <iostream>
+#include <ctype.h>
+#include <map>
+#include <stdlib.h>
 
 
 #include "../Header/include/function_struct.h"
@@ -33,7 +33,7 @@ std::string eval_expr(std::string& s)
 }
 
 bool is_symbol(char c){
-	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
+	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
 	for(int i=0;symbols[i]!='#';++i)
 		if(symbols[i]==c)
@@ -218,6 +218,8 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 				if(!f||*itr!=",")
 					converted_code.append(*itr);
+				if(f&&*itr==",")
+					converted_code.append("<<");
 				itr++;
 			}
 			converted_code.append(";\n");
@@ -265,6 +267,9 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 		else if (*itr=="while")
 		{
+
+		// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
+		// 		std::	cout<<"---"<<*itr<<"-----\n";
 			itr++;
 			bool is_not=0;
 			if(*itr=="not")
@@ -275,8 +280,11 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("while(");
 			if(is_not) converted_code.append("!");
-			while(*itr!=":")
+			while(*itr!=":"){
 				converted_code.append(*itr);
+				itr++;
+			}
+
 			converted_code.append(")\n");
 					
 			converted_code.append((size_t)lines[i].second*tab_size,' ');

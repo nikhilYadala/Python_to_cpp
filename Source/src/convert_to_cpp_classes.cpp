@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 #include <string.h>
-#include <iostream>	
+#include <iostream>
 #include <map>
 
 #include "../Header/include/function_struct.h"
@@ -12,9 +12,29 @@
 //responds for the following function call from generated_cpp_classes()
 //convert_to_cpp_classes(itr->first,itr->second,lines,&converted_code,&final_class);
 
+std::string eval_expr_(std::string& s)
+{
+	std::string evaled = "";
+	if(*s.begin()=='"') {
+		std::string subject = "";
+		std::string::iterator itr = s.begin()+1;
+		for(;*itr!='"';++itr)
+			subject.push_back(*itr);
 
-/**** FUNCTION TO BE INHERITED FROM GENERATE_CPP_CODE.CPP******/
-/**** CURRENLY, THE CODE IS JUST BEING COPIED***********/
+		evaled.append("artificial_string(\""+subject+"\")");
+
+		itr++;
+		for(;itr!=s.end();++itr)
+			evaled.push_back(*itr);
+	}
+	if(evaled == "")
+		evaled  = s;
+
+	return evaled;
+}
+
+
+
 bool is_symbol_(char c){
 	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
 
@@ -92,8 +112,10 @@ void convert_to_cpp_classes(unsigned long int start,
 							class_declaration* final_class,
 							std::map< std::string,
 							std::string >& variables )
-     {
+   {
 
+     	// if(start == end)
+     	// 	std::cout<<"-------------\n\n\n\n"<<lines[start].first<<"\n\n-----------------"
         std ::vector < std::string > tokens;
         tokens.resize(1);
         break_into_words_(lines[start].first,tokens);//the lines get tokenized,inherited function
@@ -126,10 +148,10 @@ void convert_to_cpp_classes(unsigned long int start,
           	//the above block is now no more required as, tokens no more store '\n'
 
           /************THE FOLLOWING LINES FILL std::string converted_code *******************/
-          	converted_code.append("{\npublic:\n");
+          	//converted_code.append("{\npublic:\n");
 
            
-             for(unsigned long int i=start+1;i<=end;)
+             for(unsigned long int i=start;i<=end;)
 	            {	
 		             tokens.clear();
 		              break_into_words_(lines[i].first,tokens);
@@ -200,12 +222,59 @@ void convert_to_cpp_classes(unsigned long int start,
 
 
 
+
+				else if (*itr!="def")	//variable declaration
+		{
+			std::string v=*itr;
+			std::string expr="";
+			bool is_function_call=1;
+			if(*(itr+1)=="="){
+				is_function_call=0;
+				itr=itr+2;	//skip = sign
+			}
+			while(itr!=tokens.end())
+				expr.append(*itr++);
+    		expr = eval_expr_(expr);
+
+			if(!is_function_call){
+				variables[v]=expr_type_(expr,variables);
+			
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			if(!variables.count(v))
+				converted_code.append(variables[v]);
+			converted_code.append(expr_type_(v,variables));	
+			converted_code.append(" ");
+			converted_code.append(v);
+			converted_code.append(" = ");
+			    		std::cout<<"Evaled  -- "<<expr<<"\n";
+
+			converted_code.append(expr);
+			converted_code.append(";\n");
+			}
+			else{
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append(expr);
+				converted_code.append(";\n");
+
+			}
+
+			i++;
+			continue;
+
+		}	
+
+
+
 		/***** SOME MORE CASES HAVE TO BE TAKEN CARE OF HERE.*****/
 		/***** Variables have to be explicitly taken care off.****/
       
       //At the the end, the closing lines of the classe in c++ is written
-         converted_code.append("\n};\n");
+
     
      }
+
+    //  converted_code.append("\ntalking of this one};\n");
+     // the above step to be taken care off in rendering the cpp code
+ std::cout<<"printing the converted class code\n"<<converted_code <<"haha\n";
 
      }//end of convert_to_cpp_classes
