@@ -45,15 +45,18 @@ int main(int argc, char *argv[])
 	input_code.file_name=f;
 	input_code.functionize();
 	// input_code.make_classes();
-	// std::cout<<f<<"\n";
+	std::cout<<f<<"done with make classes\n";
 	
 	input_code.generate_cpp_code();
 
 
-	// input_code.generate_cpp_classes();
-	// std::cout<<f<<"\n";
+	input_code.generate_cpp_classes();
+	 std::cout<<f<<"done with generate_cpp_classes\n";
 	
 	input_code.render_code();
+		 std::cout<<f<<"done with rendering of code\n";
+
+
 
 
 
