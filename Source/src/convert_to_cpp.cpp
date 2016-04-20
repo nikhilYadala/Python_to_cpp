@@ -325,7 +325,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
 				converted_code.append(variables[v]);
-			std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
+			// std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
 			if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
