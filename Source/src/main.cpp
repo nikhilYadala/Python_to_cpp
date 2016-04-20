@@ -44,24 +44,25 @@ int main(int argc, char *argv[])
 	source_code input_code(input_src);
 	input_code.file_name=f;
 	input_code.functionize();
-	// for(std::vector<line_pair>::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
-	// 	std::cout<<"?????????     "<<itr->first<<"      ??????????????????\n";
 
 	input_code.make_classes();
-	// std::cout<<f<<"\n";
 	
 	input_code.generate_cpp_code();
 
 
 	input_code.generate_cpp_classes();
+
 	// std::cout<<f<<"\n";
 	
 	input_code.render_code();
+		 std::cout<<f<<"done with rendering of code\n";
 
 
 
-	for(std::vector< line_pair >::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
-		std::cout<<itr->first<<"\n";
+
+
+	// for(std::vector< line_pair >::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
+	// 	std::cout<<itr->first<<"\n";
 
 	return 0;
 

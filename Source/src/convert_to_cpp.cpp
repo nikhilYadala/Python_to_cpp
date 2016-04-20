@@ -1,11 +1,11 @@
 
-#include<vector>
-#include<string>
-#include<string.h>
-#include<iostream>
-#include<ctype.h>
-#include<map>
-#include<stdlib.h>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <iostream>
+#include <ctype.h>
+#include <map>
+#include <stdlib.h>
 
 
 #include "../Header/include/function_struct.h"

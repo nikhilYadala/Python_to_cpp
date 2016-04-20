@@ -30,12 +30,16 @@ void source_code::generate_cpp_classes() //declard in source_code.h
 
      //each of the element in the classes list is considered and the final cpp code for the
      //classes is rendererd in generated_cpp_classes.
+      std::cout<<"the classes size is"<<classes.size()<<"\n";
 
      for(std::vector < int_pair >::iterator itr=classes.begin();itr!=classes.end();itr++)
      {
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
         //the last argument is missing.
+
        classes_itr->first=converted_code;
+
+
        classes_itr->second=final_class;
        classes_itr++;
       }
