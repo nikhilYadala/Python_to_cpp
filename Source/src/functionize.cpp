@@ -1,4 +1,4 @@
-#include <vector>
+ #include <vector>
 #include <string>
 #include <string.h>
 #include <iostream>
@@ -18,9 +18,15 @@ void source_code::functionize()
 		
 		int i=0,space_count=0;
 		
-		if(*itr=='\n'||*itr=='#'){		//skips an empty line or a comment line
+		if(*itr=='\n'){		//skips an empty line or a comment line
 			itr++;
 			continue;
+		}
+
+		if(*itr=='#')
+		{
+			while(*itr!='\n')
+				itr++;	
 		}
 
 

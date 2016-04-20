@@ -44,14 +44,15 @@ int main(int argc, char *argv[])
 	source_code input_code(input_src);
 	input_code.file_name=f;
 	input_code.functionize();
-	// input_code.make_classes();
-	std::cout<<f<<"done with make classes\n";
+
+	input_code.make_classes();
 	
 	input_code.generate_cpp_code();
 
 
 	input_code.generate_cpp_classes();
-	 std::cout<<f<<"done with generate_cpp_classes\n";
+
+	// std::cout<<f<<"\n";
 	
 	input_code.render_code();
 		 std::cout<<f<<"done with rendering of code\n";
@@ -60,8 +61,8 @@ int main(int argc, char *argv[])
 
 
 
-	// for(std::string::iterator itr=input_src.begin();itr!=input_src.end();++itr)
-		// std::cout<<*itr;
+	for(std::vector< line_pair >::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
+		std::cout<<itr->first<<"\n";
 
 	return 0;
 
