@@ -46,7 +46,7 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 {	
 	if(expr[0]=='"')
 		return "artificial_string";
-	if(isdigit(expr[0]))
+	if(isdigit(expr[0]) || expr[0]=='-')
 	{
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
@@ -319,17 +319,17 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
     		expr = eval_expr(expr);
 
 			if(!is_function_call){
+				bool not_decl = (variables.find(v) != variables.end());
 				variables[v]=expr_type(expr,variables);
 			
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
 				converted_code.append(variables[v]);
-			converted_code.append(expr_type(v,variables));	
+			std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
+			if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
-			    		std::cout<<"Evaled  -- "<<expr<<"\n";
-
 			converted_code.append(expr);
 			converted_code.append(";\n");
 			}
