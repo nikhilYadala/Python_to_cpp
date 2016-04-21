@@ -1,3 +1,10 @@
+/** @file supporting_libs.h
+ *  @brief All the string library functions form python translated to cpp
+ *
+ *  @bug No known bugs.
+ */
+
+
 #ifndef supporting_libs
 #define supporting_libs
 
@@ -32,6 +39,11 @@ bool hash_tables::insert(value_type &v)
 {
     if()
 }
+*/
+
+
+/**
+*Its not working!!
 */
 
 class artificial_string : public std::string
@@ -72,6 +84,12 @@ public:
         str = s;
     }
 
+/** @brief This is a string function to find if the first
+ *         letter is capital in the artificial string
+ *
+ *  @param Works on artificial string str
+ *  @return True or False
+ */
     artificial_string capitalize()    //String function for finding whether first letter is capital.
     {
 
@@ -85,12 +103,21 @@ public:
 
     }
 
-
+/** @brief This is a string function to find the string length of artificial string
+ *
+ *  @param Works on artificial string str
+ *  @return size of the artificial string
+ */
     int len()
     {
         return str.size();   //To return the sting length
     }
-
+   /** @brief This is a string function to convert the artificial string 
+ *         to all capital
+ *
+ *  @param Works on artificial string str
+ *  @return string str which is in all CAPITAL
+ */
 
    artificial_string upper()
    {
@@ -107,7 +134,12 @@ public:
     }
 
    }
-
+/** @brief This is a string function to convert the artificial string 
+ *         to small letters
+ *
+ *  @param Works on artificial string str
+ *  @return string str which is in all small characters
+ */
 artificial_string lower()
 {
     int l = str.length();
@@ -116,6 +148,13 @@ artificial_string lower()
 
     return artificial_string(str);
 }
+
+/** @brief This is a string function to find the alphabetically maximum  
+ *         character in string str
+ *
+ *  @param Works on artificial string str
+ *  @return maximum alphabetical character in string str
+ */
     
 
 char max()      
@@ -138,6 +177,12 @@ char max()
     else return ' ';
 }
 
+/** @brief This is a string function to find the alphabetically minimum  
+ *         character in string str
+ *
+ *  @param Works on artificial string str
+ *  @return minimum alphabetical character in string str
+ */
 char min()      
 {
     int i=0,min=123;
@@ -157,6 +202,11 @@ char min()
     }
     else return ' ';
 }
+/** @brief This is a string function to swapcase a given string str
+ *  Basically a capital alphabet converts to small alphabet and a small alphabet to capital.
+ *  @param Works on artificial string str
+ *  @return a string str in swapped alphabet character
+ */
 
 std::string swapcase()
 {

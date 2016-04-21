@@ -35,6 +35,7 @@ void source_code::generate_cpp_classes() //declard in source_code.h
      for(std::vector < int_pair >::iterator itr=classes.begin();itr!=classes.end();itr++)
      {
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
+        
         //the last argument is missing.
          for(int j=0;j<converted_code.size();j++)
              {

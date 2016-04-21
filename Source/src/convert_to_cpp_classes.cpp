@@ -36,7 +36,7 @@ std::string eval_expr_(std::string& s)
 
 
 bool is_symbol_(char c){
-	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
+	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
 	for(int i=0;symbols[i]!='#';++i)
 		if(symbols[i]==c)
@@ -48,14 +48,14 @@ bool is_symbol_(char c){
 std::string expr_type_(std::string& expr,std::map< std::string,std::string >& variables)
 {	
 	if(expr[0]=='"')
-		return "std::string";
-	if(isdigit(expr[0]))
+		return "artificial_string";
+	if(isdigit(expr[0]) || expr[0]=='-')
 	{
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
 				return "double";
 		return "long int";
-	}
+	}	
 	std::string::iterator itr=expr.begin();
 	std::string first_variable;
 	while(itr!=expr.end()){
