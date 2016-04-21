@@ -12,6 +12,10 @@
 //responds for the following function call from generated_cpp_classes()
 //convert_to_cpp_classes(itr->first,itr->second,lines,&converted_code,&final_class);
 
+
+void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );
+
+
 std::string eval_expr_(std::string& s)
 {
 	std::string evaled = "";
@@ -223,7 +227,7 @@ void convert_to_cpp_classes(unsigned long int start,
 
 
 		//handle functionn definition inside the classes
-		else if(*itr="def")
+		else if(*itr=="def")
 		{
 			long int space_count=lines[i].second;
 			long int st=i;
