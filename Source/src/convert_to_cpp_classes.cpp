@@ -120,9 +120,10 @@ void convert_to_cpp_classes(unsigned long int start,
         tokens.resize(1);
         break_into_words_(lines[start].first,tokens);//the lines get tokenized,inherited function
 
-        if(tokens[0]=="class")
+        if(tokens[1]=="class")
         {
-            final_class->name=tokens[1];
+            final_class->name=tokens[2];
+
 
             if(tokens[3]==":")
             	final_class->num_base_func=0;
@@ -275,6 +276,7 @@ void convert_to_cpp_classes(unsigned long int start,
 
     //  converted_code.append("\ntalking of this one};\n");
      // the above step to be taken care off in rendering the cpp code
+   
  std::cout<<"printing the converted class code\n"<<converted_code <<"haha\n";
 
      }//end of convert_to_cpp_classes
