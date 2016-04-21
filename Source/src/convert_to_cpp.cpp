@@ -42,23 +42,9 @@ bool is_symbol(char c){
 
 }
 
-std::string type_map(std::string& s, int start)
-{
-	if(s=="int")
-		return "long int";
-	else if(s=="float")
-		return "float";
-	else if(s=="s")
-		return "artificial_string";
-	else{
-		std::cout<<"[ WARNING ] Bad type given!! "<<s<<" at line "<<start<<std::endl;
-		exit(0);
-	}
-}
-
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
-	if(expr[0]=='"')
+	if(expr.substr(0,17)=="artificial_string")
 		return "artificial_string";
 	if(isdigit(expr[0]) || expr[0]=='-')
 	{
@@ -113,6 +99,18 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 	
 }
 
+std::string map_type(std::string s, int l)
+{
+	if(s=="int")
+		return "long int";
+	if(s=="float")
+		return "float";
+	if(s=="s")
+		return "artificial_string";
+	else {
+		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+	}
+}
 
 void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables )
 {
@@ -125,8 +123,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	//break_into_words(lines[start].first,tokens);
 	// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();++itr)
 	// 	std::cout<<*itr<<"--";
-
-	// std::cout<<"......>  "<<start<<"      "<<end<<"  <..........";
 
 ///////////////////////////////////////Function conversion starts/////////////////////////////////////
 	
@@ -142,16 +138,13 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 
 
 		while(*(itr1++)!=":");
-		// itr++;
+
 		for(itr=tokens.begin()+3;;itr++){
 			if(*itr == ",")
 				continue;
 			if(*(itr)==")")
 				break;
-			// std::cout<"OKKKKKKKKKKK0";
-			std::cout<<"var -- "<<*itr<<"   type-> "<<*itr1<<"\n";
-			_function->args.push_back(std::pair< std::string,std::string >(*itr,type_map(*itr1,start)));
-
+			_function->args.push_back(std::pair< std::string,std::string >(*itr,map_type(*itr1,start)));
 			itr1++;
 		}
 
@@ -159,7 +152,6 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 		
 
 	}
-
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
 	
@@ -340,8 +332,8 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
 				converted_code.append(variables[v]);
-			std::cout<<"---->  "<<expr<<"  "<<not_decl<<"       "<<expr_type(expr,variables)<<" <-----\n";
-			if(!not_decl) converted_code.append(expr_type(expr,variables));	
+			// std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
+			if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
@@ -353,7 +345,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 				converted_code.append(expr);
 				converted_code.append(";\n");
 
-				}
+			}
 
 			i++;
 			continue;
