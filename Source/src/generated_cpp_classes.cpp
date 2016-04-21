@@ -36,7 +36,13 @@ void source_code::generate_cpp_classes() //declard in source_code.h
      {
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
         //the last argument is missing.
-
+         for(int j=0;j<converted_code.size();j++)
+             {
+              if(converted_code[j]!='\n')
+                converted_code[j]=' ';
+              else
+                break;
+             }
        classes_itr->first=converted_code;
 
 
