@@ -222,9 +222,39 @@ void convert_to_cpp_classes(unsigned long int start,
 		}
 
 
+		//handle functionn definition inside the classes
+		else if(*itr="def")
+		{
+			long int space_count=lines[i].second;
+			long int st=i;
+			while(lines[++i].second>space_count); //upto i-1, we have to consider func
+			std::string converted_function;
+			function_declaration converted_function_declaration;
+			convert_to_cpp(st,i-1,lines,converted_function,&converted_function_declaration,variables);
+
+			//rendering the code for function
+			converted_code.append(converted_function_declaration.return_type).append(" ");
+			converted_code.append(converted_function_declaration.name).append("(");
+			 for(std::vector< string_pair >::iterator j=converted_function_declaration.args.begin();j!=converted_function_declaration.args.end();++j)
+			 {
+			 	converted_code.append(j->second).append(" "); //arg datatype
+			 	converted_code.append(j->first).append(","); // arg name
+			 
+			 }
+			 if(*(converted_code.end()-1) == ',')
+			 	*(converted_code.end()-1)=')';
+			 else  converted_code.append(")");
+			 
+			converted_code.append("\n{\n").append(converted_function).append("\n}\n");
+			//i already got incremented while checking for the function block
+			continue;
+
+		}//end elif statement for functions inside the class
 
 
-				else if (*itr!="def")	//variable declaration
+
+
+		else if (*itr!="def")	//variable declaration
 		{
 			std::string v=*itr;
 			std::string expr="";

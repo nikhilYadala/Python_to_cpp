@@ -110,10 +110,11 @@ std::string itoa(int number)
 }
 
 void convert_to_cpp(unsigned long int start,
-					unsigned long int end,std::vector< line_pair >& lines,
+					unsigned long int end,
+					std::vector< line_pair >& lines,
 					std::string& converted_code,
-					function_declaration* _function,std::map< std::string,
-					std::string >& variables )
+					function_declaration* _function,
+					std::map< std::string,std::string >& variables )
 {
 
 
