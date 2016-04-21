@@ -72,7 +72,7 @@ public:
         str = s;
     }
 
-    artificial_string capitalize()    //String function for finding whether first letter is capital.
+    bool capitalize()    //String function for finding whether first letter is capital.
     {
 
         if (str.size())
@@ -80,9 +80,10 @@ public:
 
             str[0] = toupper(str[0]);
 
-           return artificial_string(str);
+           return true;
         }
-
+        else
+            return false;
     }
 
 
@@ -92,7 +93,7 @@ public:
     }
 
 
-   artificial_string upper()
+   bool upper()
    {
     if(str.size())
     {
@@ -102,19 +103,17 @@ public:
             str[i]=toupper(str[i]);            //To convert a string to capital character
             i++;
         }             
-
-        return artificial_string(str);
+        return true;
     }
+    else return false;
 
    }
 
-artificial_string lower()
+void lower()
 {
     int l = str.length();
     for (int i = 0; i < l; i++)
         str[i] = tolower(str[i]);
-
-    return artificial_string(str);
 }
     
 
@@ -159,8 +158,7 @@ char min()
 }
 
 std::string swapcase()
-{
-if(str.size())
+{if(str.size())
     {int i=0;
         while(str[i]!='\0')
         {

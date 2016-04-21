@@ -15,11 +15,6 @@
 #include "gtest/gtest.h"
 #include<string>
 
-/* FOR RFEERNCE
-for(std::vector<line_pair>::iterator itr=input_code.lines.begin();itr!=input_code.lines.end();++itr)
-		std::cout<<"?????????     "<<itr->first<<"      ??????????????????\n";
-		*/
-
 TEST (functionize,boundaryconditions){
 		std::string input_src;
 	FILE *fp = fopen("f.py","r");
@@ -63,18 +58,23 @@ TEST (functionize,random_function){
 	input_code.functionize();
 	std::vector<line_pair>::iterator itr=input_code.lines.begin();
 	ASSERT_STREQ("def fib(n):",itr->first.c_str());
+	ASSERT_EQ(0,itr->second);
 	itr++;
 	ASSERT_STREQ("if n==1:",itr->first.c_str());
+	ASSERT_EQ(4,itr->second);
 	itr++;
 	ASSERT_STREQ("return 1",itr->first.c_str());
+	ASSERT_EQ(7,itr->second);
 	itr++;
 	ASSERT_STREQ("if n==0:",itr->first.c_str());
+	ASSERT_EQ(4,itr->second);
 	itr++;
 	ASSERT_STREQ("return fib(n-1)+fib(n-2)",itr->first.c_str());
+	ASSERT_EQ(8,itr->second);
 	itr++;
 	ASSERT_STREQ("print fib(10)",itr->first.c_str());
+	ASSERT_EQ(0,itr->second);
 }
-
 
 int main(int argc, char **argv) {
 ::testing::InitGoogleTest(&argc, argv);
