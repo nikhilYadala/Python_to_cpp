@@ -1,5 +1,5 @@
-/*
-Class definition to break source code into functions and return them in a vector of strings
+/** @file source_code.h
+*brief Class definition 
 */
 
 #ifndef function_break
@@ -12,6 +12,11 @@ Class definition to break source code into functions and return them in a vector
 
 #include "class_struct.h"
 #include "function_struct.h"
+
+/** @defgroup class source_code
+ *  This class takes the input file and converts to cpp
+ */
+
 
 class source_code{
 
@@ -31,6 +36,7 @@ std::vector< std::pair< std::string,class_declaration > > generated_cpp_classes;
 
  source_code(std::string& st) : code(st){
 }
+
  void functionize();
  void make_classes();       //separating classes from the python code.
  void generate_cpp_code();
