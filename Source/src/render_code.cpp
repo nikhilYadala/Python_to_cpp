@@ -11,6 +11,7 @@
 
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
+#include "../Header/include/class_struct.h"
 
 
 void source_code::render_code()
@@ -32,20 +33,20 @@ void source_code::render_code()
 
 
 
-	/*----------------------------------------
+//code for rendering the cpp classes
 
-	for(std::vector< std::pair< std::string,class_declaration > >::iterator itr=generated_cpp_classes.begin();itr!=generated_cpp_classes.end();++itr)
-		{
-		 	decl.append("class");
-			decl.append(" ");
-			decl.append(itr->second.name);		 
-			decl.append("\n{\n");
-			decl.append(itr->first);
-			decl.append("\n}\n\n");
+  for(std::vector<std::pair <std::string,class_declaration > >
+   			::iterator class_itr=generated_cpp_classes.begin();
+   			 class_itr!=generated_cpp_classes.end()-1;
+   			 class_itr++)
+   {
+   		decl.append("class ");
+   		decl.append((class_itr->second).name);
+   		decl.append("\n{");
+   		decl.append(class_itr->first);
+   		decl.append("\n}\n");
+   }
 
-		}
-
-	----------------------------*/
 
 // For remaining functions iterate over the generated_cpp_code vec	tor
 	for(std::vector< std::pair< std::string,function_declaration > >::iterator itr=generated_cpp_code.begin()+1;itr!=generated_cpp_code.end();++itr)
