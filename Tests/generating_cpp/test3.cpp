@@ -26,11 +26,7 @@ TEST (render_code, ifelsecondition ){
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
 	
-	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator p.py");
 	
 
 	std::string input_src1;
@@ -60,10 +56,8 @@ TEST (render_code, whileloop ){
 		fclose(fp);
 	
 	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator q.py");
+	
 	
 
 	std::string input_src1;
@@ -93,10 +87,8 @@ TEST (render_code, trivialconstant ){
 		fclose(fp);
 	
 	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator r.py");
+	
 	
 
 	std::string input_src1;
