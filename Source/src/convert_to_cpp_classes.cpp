@@ -135,10 +135,13 @@ void convert_to_cpp_classes(unsigned long int start,
             {
                  std::vector<std::string>::iterator tokens_itr =tokens.begin()+3;
                  while(*(++tokens_itr)!=")")
-                 {
+                 {  
+                 	if(*tokens_itr==",")
+                 		continue;  //delimeter for inherited list of functions
+
                  	(final_class->base_functions).push_back(*tokens_itr);
                  	(final_class->num_base_func)++;//incremented each time a base func is found
-                 	tokens_itr++; //to bypass the commas after each base function
+                 	//tokens_itr++; //to bypass the commas after each base function
 
                  }
 
