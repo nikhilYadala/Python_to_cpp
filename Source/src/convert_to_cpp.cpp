@@ -396,9 +396,19 @@ void convert_to_cpp(unsigned long int start,
 			
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
+
+			{//this bracket to be closed
+			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
 				converted_code.append(variables[v]);
-			// std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
-			if(!not_decl) converted_code.append(expr_type(v,variables));	
+			}
+
+			// else if(variable[v]=="list")
+			// {
+
+			// }
+
+
+			else if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
