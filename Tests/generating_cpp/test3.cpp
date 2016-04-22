@@ -39,7 +39,8 @@ TEST (render_code, ifelsecondition ){
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
 	
-	system("../../translator p.py");
+
+	system("../../translator p.py");   
 	
 
 	std::string input_src1;

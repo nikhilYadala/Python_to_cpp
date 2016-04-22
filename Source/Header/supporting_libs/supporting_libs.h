@@ -112,7 +112,8 @@ public:
     {
         return str.size();   //To return the sting length
     }
-   /** @brief This is a string function to convert the artificial string 
+
+/** @brief This is a string function to convert the artificial string 
  *         to all capital
  *
  *  @param Works on artificial string str
@@ -134,6 +135,8 @@ public:
     }
 
    }
+
+
 /** @brief This is a string function to convert the artificial string 
  *         to small letters
  *

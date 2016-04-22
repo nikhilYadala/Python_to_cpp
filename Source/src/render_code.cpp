@@ -42,6 +42,20 @@ void source_code::render_code()
    {
    		decl.append("class ");
    		decl.append((class_itr->second).name);
+   		//attach the inherited functions here
+   		if((class_itr->second).num_base_func >0)
+   		{
+   			decl.append(": ");
+   			std::vector< std::string >::iterator base_functions_itr = (class_itr->second).base_functions.begin();
+   			for(int k=0;k<(class_itr->second).num_base_func;k++)
+   			{
+   				decl.append("public ");
+   				decl.append(*(base_functions_itr));
+   				base_functions_itr++;
+
+
+   			}
+   		}
    		decl.append("\n{");
    		decl.append(class_itr->first);
    		decl.append("\n}\n");
