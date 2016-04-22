@@ -100,6 +100,7 @@ public:
 
            return artificial_string(str);
         }
+        else return artificial_string("");
 
     }
 
@@ -133,6 +134,7 @@ public:
 
         return artificial_string(str);
     }
+    else return artificial_string("");
 
    }
 
