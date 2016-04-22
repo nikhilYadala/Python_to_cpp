@@ -365,7 +365,7 @@ void convert_to_cpp(unsigned long int start,
 			converted_code.append("=");
 			converted_code.append((start_range));
 			converted_code.append(";").append(var).append("<=").append((end_range)).append(";");
-			converted_code.append(var).append("++;)\n");//starting the for loop with {
+			converted_code.append(var).append("++)\n");//starting the for loop with {
 				// i++;  //to go next line
 			spaces = (size_t)lines[i].second;
 			converted_code.append(spaces*tab_size,' ');
