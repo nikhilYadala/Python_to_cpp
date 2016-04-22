@@ -47,7 +47,12 @@ TEST (render_code, ifelsecondition ){
 	exit(0);
 	}
 	
+<<<<<<< HEAD
 	system("../translator  generating_cpp/p.py");   
+=======
+
+	system("../../translator p.py");   
+>>>>>>> f6961ed0a00227b19532782cb13936603328ae9c
 	
 
 	std::string input_src1;

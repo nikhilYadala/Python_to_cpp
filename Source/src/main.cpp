@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	input_code.file_name=f;
 	input_code.functionize();
 
-	input_code.make_classes();
+	//input_code.make_classes();
 	
 	input_code.generate_cpp_code();
 

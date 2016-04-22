@@ -12,6 +12,10 @@
 //responds for the following function call from generated_cpp_classes()
 //convert_to_cpp_classes(itr->first,itr->second,lines,&converted_code,&final_class);
 
+
+void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );
+
+
 std::string eval_expr_(std::string& s)
 {
 	std::string evaled = "";
@@ -36,7 +40,7 @@ std::string eval_expr_(std::string& s)
 
 
 bool is_symbol_(char c){
-	char symbols[]=" =:;(){}[]|,.&+-*/'\n#";
+	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
 	for(int i=0;symbols[i]!='#';++i)
 		if(symbols[i]==c)
@@ -48,14 +52,14 @@ bool is_symbol_(char c){
 std::string expr_type_(std::string& expr,std::map< std::string,std::string >& variables)
 {	
 	if(expr[0]=='"')
-		return "std::string";
-	if(isdigit(expr[0]))
+		return "artificial_string";
+	if(isdigit(expr[0]) || expr[0]=='-')
 	{
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
 				return "double";
 		return "long int";
-	}
+	}	
 	std::string::iterator itr=expr.begin();
 	std::string first_variable;
 	while(itr!=expr.end()){
@@ -131,10 +135,13 @@ void convert_to_cpp_classes(unsigned long int start,
             {
                  std::vector<std::string>::iterator tokens_itr =tokens.begin()+3;
                  while(*(++tokens_itr)!=")")
-                 {
+                 {  
+                 	if(*tokens_itr==",")
+                 		continue;  //delimeter for inherited list of functions
+
                  	(final_class->base_functions).push_back(*tokens_itr);
                  	(final_class->num_base_func)++;//incremented each time a base func is found
-                 	tokens_itr++; //to bypass the commas after each base function
+                 	//tokens_itr++; //to bypass the commas after each base function
 
                  }
 
@@ -222,9 +229,39 @@ void convert_to_cpp_classes(unsigned long int start,
 		}
 
 
+		//handle functionn definition inside the classes
+		else if(*itr=="def")
+		{
+			long int space_count=lines[i].second;
+			long int st=i;
+			while(lines[++i].second>space_count); //upto i-1, we have to consider func
+			std::string converted_function;
+			function_declaration converted_function_declaration;
+			convert_to_cpp(st,i-1,lines,converted_function,&converted_function_declaration,variables);
+
+			//rendering the code for function
+			converted_code.append(converted_function_declaration.return_type).append(" ");
+			converted_code.append(converted_function_declaration.name).append("(");
+			 for(std::vector< string_pair >::iterator j=converted_function_declaration.args.begin();j!=converted_function_declaration.args.end();++j)
+			 {
+			 	converted_code.append(j->second).append(" "); //arg datatype
+			 	converted_code.append(j->first).append(","); // arg name
+			 
+			 }
+			 if(*(converted_code.end()-1) == ',')
+			 	*(converted_code.end()-1)=')';
+			 else  converted_code.append(")");
+			 
+			converted_code.append("\n{\n").append(converted_function).append("\n}\n");
+			//i already got incremented while checking for the function block
+			continue;
+
+		}//end elif statement for functions inside the class
 
 
-				else if (*itr!="def")	//variable declaration
+
+
+		else if (*itr!="def")	//variable declaration
 		{
 			std::string v=*itr;
 			std::string expr="";

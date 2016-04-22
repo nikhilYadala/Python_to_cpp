@@ -1,7 +1,8 @@
 class counter:
-	if 1:
-		print "hi"
-		count=2
+	c = 0
+	def inc():
+		c = c+1
 
-n = 0
+
+
 print n

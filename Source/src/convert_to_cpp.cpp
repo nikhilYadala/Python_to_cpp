@@ -6,6 +6,8 @@
 #include <ctype.h>
 #include <map>
 #include <stdlib.h>
+#include <iostream>
+#include <sstream>
 
 
 #include "../Header/include/function_struct.h"
@@ -44,7 +46,7 @@ bool is_symbol(char c){
 
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
-	if(expr[0]=='"')
+	if(expr.substr(0,17)=="artificial_string")
 		return "artificial_string";
 	if(isdigit(expr[0]) || expr[0]=='-')
 	{
@@ -99,8 +101,33 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 	
 }
 
+std::string map_type(std::string s, int l)
+{
+	if(s=="int")
+		return "long int";
+	if(s=="float")
+		return "float";
+	if(s=="s")
+		return "artificial_string";
+	else {
+		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+	}
+}
 
-void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables )
+
+std::string itoa(int number)
+{
+std::ostringstream oss;
+  oss<< number;
+  return oss.str();
+}
+
+void convert_to_cpp(unsigned long int start,
+					unsigned long int end,
+					std::vector< line_pair >& lines,
+					std::string& converted_code,
+					function_declaration* _function,
+					std::map< std::string,std::string >& variables )
 {
 
 
@@ -122,28 +149,23 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 	{
 
 		_function->name=tokens[1];	
-		std::vector< std::string >::iterator itr;
+		std::vector< std::string >::iterator itr,itr1=tokens.begin();
+
+
+		while(*(itr1++)!=":");
 
 		for(itr=tokens.begin()+3;;itr++){
 			if(*itr == ",")
 				continue;
 			if(*(itr)==")")
 				break;
-			_function->args.push_back(std::pair< std::string,std::string >(*itr,""));
+			_function->args.push_back(std::pair< std::string,std::string >(*itr,map_type(*itr1,start)));
+			itr1++;
 		}
 
 		while(*(itr++)!=":");	//skip ':' of function declaration
 		
-		//After every function declaration put a series of example values
 
-		int i=0;
-		while(itr!=tokens.end())
-		{
-			if(*(itr++)!=","){
-				_function->args[i++].second=expr_type(*(itr-1),variables);
-			}
-			
-		}
 	}
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
@@ -158,8 +180,7 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 		// 		std::	cout<<"---"<<*itr<<"-----";
 		// 	std::cout<<"\n\n";
 
-		std::vector< std::string >::iterator itr=tokens.begin();
-		
+		std::vector< std::string >::iterator itr=tokens.begin();		
 		if(*itr=="if" || *itr == "elif")
 		{
 			std::vector< std::string >::iterator if_or_elif = itr; 
@@ -305,6 +326,65 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			continue;
 		}
 
+	//code for converting for loops in python to cpp
+		else if(*itr=="for")
+		{
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			int spaces=(size_t)lines[i].second;
+			converted_code.append("for(long int ");
+			converted_code.append(*(++itr)); 
+			std::string var=*(itr); 
+
+			std::string start_range="0";std::string end_range="";
+
+			std::vector< std::string >::iterator itr2;
+			itr2=++itr;//bypassing "in"
+
+			if(*(++itr2)=="range")
+			{
+				if(*(++itr2)=="(")            //the case of range(3,5)
+				{
+					start_range = *(++itr2);
+					
+					if(*(++itr2)==",")
+					{
+						end_range=*(++itr2);
+					}
+					else						//the case of range(100)
+					{
+						end_range=start_range.append("-1");
+						start_range="0";
+					}
+
+				} //end evaluating the expression in range()
+
+				
+			}//end the range()
+
+
+			converted_code.append("=");
+			converted_code.append((start_range));
+			converted_code.append(";").append(var).append("<=").append((end_range)).append(";");
+			converted_code.append(var).append("++)\n");//starting the for loop with {
+				// i++;  //to go next line
+			spaces = (size_t)lines[i].second;
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("{\n");
+
+			int space_count=lines[i].second,st=i;
+
+			while(lines[++i].second>space_count); //to find the complete for block
+			std::string snippet;
+			convert_to_cpp(st+1,i-1,lines,snippet,_function,variables);
+			converted_code.append(snippet);
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("}\n");
+			//i already incremented while changing lines
+			continue;
+
+
+	}//end elseif statement for for loop
+
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
 			std::string v=*itr;
@@ -324,9 +404,19 @@ void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< l
 			
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			if(!variables.count(v))
+
+			{//this bracket to be closed
+			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
 				converted_code.append(variables[v]);
-			// std::cout<<"---->  "<<lines[i].first<<"  "<<not_decl<<"       "<<expr_type(v,variables)<<" <-----\n";
-			if(!not_decl) converted_code.append(expr_type(v,variables));	
+			}
+
+			// else if(variable[v]=="list")
+			// {
+
+			// }
+
+
+			else if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
