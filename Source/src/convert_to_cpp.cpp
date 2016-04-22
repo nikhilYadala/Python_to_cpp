@@ -427,7 +427,7 @@ void convert_to_cpp(unsigned long int start,
 			bool not_decl = (variables.find(v) != variables.end());
 			if(!type_annotated)
 				variables[v]=expr_type(expr,variables);
-			else variables[v]=*itr1;
+			else variables[v]=map_type(*itr1,i);
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			
 			if(!variables.count(v))
