@@ -46,6 +46,9 @@ bool is_symbol(char c){
 
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
+	if(variables.count(expr))
+		return variables[expr];
+
 	if(expr.substr(0,17)=="artificial_string")
 		return "artificial_string";
 	if(isdigit(expr[0]) || expr[0]=='-')
@@ -240,7 +243,7 @@ void convert_to_cpp(unsigned long int start,
 				if(!f||*itr!=",")
 					converted_code.append(*itr);
 				if(f&&*itr==",")
-					converted_code.append("<<");
+					converted_code.append("<<\"  \"<<");
 				itr++;
 			}
 			converted_code.append(";\n");
@@ -387,6 +390,8 @@ void convert_to_cpp(unsigned long int start,
 
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
+
+
 			std::string v=*itr;
 			std::string expr="";
 			bool is_function_call=1;
@@ -394,17 +399,38 @@ void convert_to_cpp(unsigned long int start,
 				is_function_call=0;
 				itr=itr+2;	//skip = sign
 			}
-			while(itr!=tokens.end())
+
+			if(is_function_call)
+				while(itr!=tokens.end()) expr.append(*itr++);
+			else{
+			while(*itr!=":" && itr!=tokens.end())
 				expr.append(*itr++);
+		}
+
+			bool type_annotated = 1;
+
+			if(itr == tokens.end())
+			{
+				type_annotated = 0;
+				if(!is_function_call)
+					std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
+			}
+			
+			std::vector< std::string >::iterator itr1 = itr;
+			if(type_annotated)	{
+				itr1 = itr+1;
+			}
+
     		expr = eval_expr(expr);
 
 			if(!is_function_call){
-				bool not_decl = (variables.find(v) != variables.end());
+			bool not_decl = (variables.find(v) != variables.end());
+			if(!type_annotated)
 				variables[v]=expr_type(expr,variables);
-			
+			else variables[v]=*itr1;
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			
 			if(!variables.count(v))
-
 			{//this bracket to be closed
 			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
 				converted_code.append(variables[v]);
@@ -414,8 +440,6 @@ void convert_to_cpp(unsigned long int start,
 			// {
 
 			// }
-
-
 			else if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
@@ -427,11 +451,12 @@ void convert_to_cpp(unsigned long int start,
 				converted_code.append((size_t)lines[i].second*tab_size,' ');
 				converted_code.append(expr);
 				converted_code.append(";\n");
-
 			}
 
 			i++;
 			continue;
+
+
 
 		}	 
 		i++;							// if nothing gets caught
