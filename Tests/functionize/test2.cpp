@@ -1,3 +1,8 @@
+/** @file test2.cpp
+ *  @brief Test the functionize function 
+ *   We are testing functionize function on various inputs and comparing its expected output
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <iostream>
 #include <stdio.h>
@@ -15,6 +20,13 @@
 #include "gtest/gtest.h"
 #include<string>
 
+/** @brief This is a Test function to check 
+ *         boundary conditions of the functionize function
+ *
+ *  It defines a class of source code and runs functionize function only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 TEST (functionize,boundaryconditions){
 		std::string input_src;
 	FILE *fp = fopen("f.py","r");
@@ -30,6 +42,13 @@ itr++;
 EXPECT_STREQ("s2=0678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",itr->first.c_str());
 }
 
+/** @brief This is a Test function to check separations of
+ *         comments being done correctly by functionize function
+ *
+ *  It defines a class of source code and runs functionize function only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 TEST (functionize,separation_of_comments){
 std::string input_src;
 	FILE *fp = fopen("f1.py","r");
@@ -47,6 +66,12 @@ std::string input_src;
 	ASSERT_STREQ("print a+b",itr->first.c_str());
 }
 
+/** @brief This is a Test function to check correctness by testing 
+ *         for some random function.
+ *  It defines a class of source code and runs functionize function only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 TEST (functionize,random_function){
 	std::string input_src;
 	FILE *fp = fopen("f2.py","r");

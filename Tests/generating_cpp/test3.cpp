@@ -1,3 +1,9 @@
+/** @file test3.cpp
+ *  @brief Test the render_code and generate_cpp_code function 
+ *   We are testing functionize function on various inputs and comparing its expected output
+ *  @bug No known bugs.
+ */
+
 #include <vector>
 #include <iostream>
 #include <stdio.h>
@@ -18,6 +24,13 @@
 #include "gtest/gtest.h"
 #include<string>
 
+/** @brief This is a Test function to check 
+ *         if-else conditional branch is translated as expected
+ *
+ *  It defines a class of source code and runs translator only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 TEST (render_code, ifelsecondition ){
 	std::string input_src;
 	FILE *fp = fopen("p.py","r");
@@ -26,11 +39,7 @@ TEST (render_code, ifelsecondition ){
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
 	
-	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator p.py");   
 	
 
 	std::string input_src1;
@@ -51,6 +60,14 @@ TEST (render_code, ifelsecondition ){
 	EXPECT_STREQ(input_src2.c_str(),input_src1.c_str());	
 }
 //============================================================================================================================================================
+/** @brief This is a Test function to check 
+ *         while loop is translated as expected
+ *
+ *  It defines a class of source code and runs translator only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
+
 TEST (render_code, whileloop ){
 	std::string input_src;
 	FILE *fp = fopen("q.py","r");
@@ -60,10 +77,8 @@ TEST (render_code, whileloop ){
 		fclose(fp);
 	
 	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator q.py");
+	
 	
 
 	std::string input_src1;
@@ -84,6 +99,14 @@ TEST (render_code, whileloop ){
 	EXPECT_STREQ(input_src2.c_str(),input_src1.c_str());	
 }
 //============================================================================================================================================================
+/** @brief This is a Test function to check 
+ *         if a trivial program  is translated as expected
+ *
+ *  It defines a class of source code and runs translator only to match it with the expected output later on.
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
+
 TEST (render_code, trivialconstant ){
 	std::string input_src;
 	FILE *fp = fopen("r.py","r");
@@ -93,10 +116,8 @@ TEST (render_code, trivialconstant ){
 		fclose(fp);
 	
 	
-	source_code input_code(input_src);
-	input_code.functionize();
-	input_code.generate_cpp_code();
-	input_code.render_code();
+	system("../../translator r.py");
+	
 	
 
 	std::string input_src1;
