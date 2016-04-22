@@ -391,7 +391,6 @@ void convert_to_cpp(unsigned long int start,
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
 
-
 			std::string v=*itr;
 			std::string expr="";
 			bool is_function_call=1;
@@ -400,6 +399,43 @@ void convert_to_cpp(unsigned long int start,
 				itr=itr+2;	//skip = sign
 			}
 
+			if(*itr=="raw_input")
+			{
+				itr++;
+				bool f = 0;
+				int i = 0;
+				expr.append(*(itr+1));
+				while(*itr!=":") {
+					i++;
+					// if(*itr=="(") f=1;
+					// if(!f) expr.append(*itr);
+					itr++;
+					if(i==1000000)
+					{
+						std::cout<<": missing on line "<<i<<std::endl;
+						exit(0);
+					}
+				}
+				std::cout<<"GDFDDDDDDDCC"<<expr<"GDDDDDDDDD\n";
+				itr++;
+				variables[v]=map_type(*itr,i);
+				converted_code.append((size_t)lines[i].second*tab_size,' ');			
+				converted_code.append(variables[v]);
+				if(variables[v]=="artificial_string")
+					converted_code.append(" "+v+"(\"\");\n");					
+				else converted_code.append(" "+v+";\n"	);
+
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cout<<");
+				converted_code.append(expr);
+				converted_code.append(";\n");
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cin>>");
+				converted_code.append(v);
+				converted_code.append(";\n");
+				
+			}
+			else{
 			if(is_function_call)
 				while(itr!=tokens.end()) expr.append(*itr++);
 			else{
@@ -452,7 +488,7 @@ void convert_to_cpp(unsigned long int start,
 				converted_code.append(expr);
 				converted_code.append(";\n");
 			}
-
+		}
 			i++;
 			continue;
 
