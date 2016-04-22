@@ -94,6 +94,7 @@ public:
 
            return artificial_string(str);
         }
+        else return artificial_string("");
 
     }
 
@@ -126,6 +127,7 @@ public:
 
         return artificial_string(str);
     }
+    else return artificial_string("");
 
    }
 /** @brief This is a string function to convert the artificial string 
