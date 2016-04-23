@@ -2,7 +2,7 @@
  *  @brief This file sends the python code broken into functions
  *  @bug No known bugs.
  */
- #include <vector>
+#include <vector>
 #include <string>
 #include <string.h>
 #include <iostream>
@@ -25,11 +25,13 @@ void self_sanitize(std::string* code) {
     }
 
 }
+
 /** @brief Evaluate the python code to break into functions
  *   This function takes out the function from python code by undrstanding the length of code that belongs to each function.
  *  @param NIL
  *  @return functions to convert_to_cpp
  */
+
 void source_code::functionize()
 {
 	code.push_back('\n');

@@ -144,7 +144,9 @@ std::string map_type(std::string s, int l)
 		return s;
 	}
 
+
 }
+
 
 /** @brief Converts the integer into string 
  *
