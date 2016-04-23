@@ -7,11 +7,26 @@
 #include "../Header/include/source_code.h"
 #define max_line_length 500
 
+void self_sanitize(std::string* code) {
+	int itr = code->find("self.", 0);
+    while(itr != std::string::npos) {
+        code->replace(itr, 5, ""); 
+        itr = code->find("self.", itr);
+    }
+
+    itr = code->find("self", 0);
+    while(itr != std::string::npos) {
+        code->replace(itr, 4, ""); 
+        itr = code->find("self", itr);
+    }
+
+}
 
 void source_code::functionize()
 {
 	code.push_back('\n');
-	// std::cout<<code;
+	self_sanitize(&code);
+	std::cout<<"\n\n\n\n\n\n"<<code<<"\n\n\n\n\n\n";
 		
 	for(std::string::iterator itr=code.begin();itr!=code.end();)   //This for loop has no increment part to provide flexibility to inner code 
 	{

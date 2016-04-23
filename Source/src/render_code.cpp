@@ -57,8 +57,9 @@ void source_code::render_code()
    			}
    		}
    		decl.append("\n{");
+   		decl.append("\n public: \n");
    		decl.append(class_itr->first);
-   		decl.append("\n}\n");
+   		decl.append("\n};\n");
    }
 
 

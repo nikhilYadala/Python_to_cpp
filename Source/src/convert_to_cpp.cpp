@@ -114,7 +114,9 @@ std::string map_type(std::string s, int l)
 		return "artificial_string";
 	else {
 		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+		return s;
 	}
+
 }
 
 
@@ -133,7 +135,6 @@ void convert_to_cpp(unsigned long int start,
 					std::map< std::string,std::string >& variables )
 {
 
-
 // std::cout<<src.lines[itr1->first].first;
 	std::vector< std::string > tokens;
 
@@ -150,10 +151,9 @@ void convert_to_cpp(unsigned long int start,
 
 	if(tokens[0]=="def")
 	{
-
+		_function->return_type="";
 		_function->name=tokens[1];	
 		std::vector< std::string >::iterator itr,itr1=tokens.begin();
-
 
 		while(*(itr1++)!=":");
 
@@ -165,9 +165,6 @@ void convert_to_cpp(unsigned long int start,
 			_function->args.push_back(std::pair< std::string,std::string >(*itr,map_type(*itr1,start)));
 			itr1++;
 		}
-
-		while(*(itr++)!=":");	//skip ':' of function declaration
-		
 
 	}
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
@@ -441,17 +438,16 @@ void convert_to_cpp(unsigned long int start,
 			else{
 			while(*itr!=":" && itr!=tokens.end())
 				expr.append(*itr++);
-		}
+			}
 
 			bool type_annotated = 1;
-
 			if(itr == tokens.end())
 			{
 				type_annotated = 0;
 				if(!is_function_call)
 					std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
 			}
-			
+
 			std::vector< std::string >::iterator itr1 = itr;
 			if(type_annotated)	{
 				itr1 = itr+1;
@@ -461,9 +457,15 @@ void convert_to_cpp(unsigned long int start,
 
 			if(!is_function_call){
 			bool not_decl = (variables.find(v) != variables.end());
+
 			if(!type_annotated)
 				variables[v]=expr_type(expr,variables);
-			else variables[v]=map_type(*itr1,i);
+			else {
+				variables[v]="dfsg";
+				std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
+
+				variables[v]=map_type(*itr1,i);
+				}
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			
 			if(!variables.count(v))
