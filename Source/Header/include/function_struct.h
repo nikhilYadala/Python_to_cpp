@@ -6,8 +6,6 @@
 #define function_struct_def
 #define string_pair std::pair< std::string,std::string >	//function args name and type
 
-/** @param Declaring function with name , return type, args
-*/
 struct function_declaration{
 	std::string name;
 	std::string return_type;

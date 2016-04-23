@@ -234,13 +234,21 @@ void convert_to_cpp_classes(unsigned long int start,
 		{
 			long int space_count=lines[i].second;
 			long int st=i;
+			std::vector< std::string >::iterator itr1=tokens.begin();
+
 			while(lines[++i].second>space_count); //upto i-1, we have to consider func
 			std::string converted_function;
 			function_declaration converted_function_declaration;
 			convert_to_cpp(st,i-1,lines,converted_function,&converted_function_declaration,variables);
 
 			//rendering the code for function
+			if(converted_function_declaration.return_type == "")
+				converted_function_declaration.return_type = "void";
 			converted_code.append(converted_function_declaration.return_type).append(" ");
+			//the funciton can be a constructor
+			if(converted_function_declaration.name=="__init__")
+				converted_code.append(final_class->name).append("(");
+			else
 			converted_code.append(converted_function_declaration.name).append("(");
 			 for(std::vector< string_pair >::iterator j=converted_function_declaration.args.begin();j!=converted_function_declaration.args.end();++j)
 			 {

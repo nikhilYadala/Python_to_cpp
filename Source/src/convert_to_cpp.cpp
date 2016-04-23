@@ -1,4 +1,7 @@
-
+ /** @file convert_to_cpp.cpp
+ *  @brief This file converts the python code to C++ code in order given to it
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <string>
 #include <string.h>
@@ -12,7 +15,11 @@
 
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
-
+ /** @brief Evaluate the python code to C++ code 
+ *
+ *  @param python expression
+ *  @return converted C++ expression.
+ */
 std::string eval_expr(std::string& s)
 {
 	std::string evaled = "";
@@ -33,7 +40,12 @@ std::string eval_expr(std::string& s)
 
 	return evaled;
 }
-
+ /** @brief Checks the special symbols used 
+ *   
+ *   It reads the character and checks if it is a special symbol used in python 
+ *  @param character c
+ *  @return Tells if the read symbol is special or not.
+ */
 bool is_symbol(char c){
 	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
@@ -43,7 +55,12 @@ bool is_symbol(char c){
 	return 0;
 
 }
-
+ /** @brief Decides the type of the variable 
+ *
+ *   It checks and decides the type of variables in C++ for corresponding variable in python  
+ *  @param python expression 
+ *  @return C++ type for the variable
+ */
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
 	if(variables.count(expr))
@@ -71,7 +88,12 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 	else return "";
 }
 
-
+/** @brief Breaks the python string to words 
+ *
+ *   It breaks the python string into words and breaks into token   
+ *  @param python string 
+ *  @return NIL
+ */
 void break_into_words(std::string& line,std::vector< std::string >& tokens)
 {
 	int flag=1;	//to check if a symbol has been pushed and tokens.end()-1 isn't a continuing token
@@ -103,7 +125,12 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 	}
 	
 }
-
+/** @brief Wraps mentioned type of variable
+ *
+ *  It reads the type if mentioned in the python code  
+ *  @param string type that has type ,int l 
+ *  @return The type of the variable.
+ */
 std::string map_type(std::string s, int l)
 {
 	if(s=="int")
@@ -114,17 +141,29 @@ std::string map_type(std::string s, int l)
 		return "artificial_string";
 	else {
 		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+		return s;
 	}
+
 }
 
-
+/** @brief Converts the integer into string 
+ *
+ *  It converts a integer in its corresponding string form 
+ *  @param integer number 
+ *  @return number as string
+ */
 std::string itoa(int number)
 {
 std::ostringstream oss;
   oss<< number;
   return oss.str();
 }
-
+/** @brief Converts Python code to C++ code in order 
+ *
+ *  It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending.   
+ *  @param starting line, ending line,vector of lines of code, function parameters, variables table 
+ *  @return NIL 
+ */
 void convert_to_cpp(unsigned long int start,
 					unsigned long int end,
 					std::vector< line_pair >& lines,
@@ -132,7 +171,6 @@ void convert_to_cpp(unsigned long int start,
 					function_declaration* _function,
 					std::map< std::string,std::string >& variables )
 {
-
 
 // std::cout<<src.lines[itr1->first].first;
 	std::vector< std::string > tokens;
@@ -150,10 +188,9 @@ void convert_to_cpp(unsigned long int start,
 
 	if(tokens[0]=="def")
 	{
-
+		_function->return_type="";
 		_function->name=tokens[1];	
 		std::vector< std::string >::iterator itr,itr1=tokens.begin();
-
 
 		while(*(itr1++)!=":");
 
@@ -166,9 +203,6 @@ void convert_to_cpp(unsigned long int start,
 			itr1++;
 		}
 
-		while(*(itr++)!=":");	//skip ':' of function declaration
-		
-
 	}
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
@@ -179,9 +213,9 @@ void convert_to_cpp(unsigned long int start,
 	{	
 		tokens.clear();
 		break_into_words(lines[i].first,tokens);
-				// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
-		// 		std::	cout<<"---"<<*itr<<"-----";
-		// 	std::cout<<"\n\n";
+			// 	for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
+			// 	std::	cout<<"---"<<*itr<<"-----";
+			// std::cout<<"\n\n";
 
 		std::vector< std::string >::iterator itr=tokens.begin();		
 		if(*itr=="if" || *itr == "elif")
@@ -441,17 +475,16 @@ void convert_to_cpp(unsigned long int start,
 			else{
 			while(*itr!=":" && itr!=tokens.end())
 				expr.append(*itr++);
-		}
+			}
 
 			bool type_annotated = 1;
-
 			if(itr == tokens.end())
 			{
 				type_annotated = 0;
 				if(!is_function_call)
 					std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
 			}
-			
+
 			std::vector< std::string >::iterator itr1 = itr;
 			if(type_annotated)	{
 				itr1 = itr+1;
@@ -461,9 +494,15 @@ void convert_to_cpp(unsigned long int start,
 
 			if(!is_function_call){
 			bool not_decl = (variables.find(v) != variables.end());
+
 			if(!type_annotated)
 				variables[v]=expr_type(expr,variables);
-			else variables[v]=map_type(*itr1,i);
+			else {
+				variables[v]="dfsg";
+				std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
+
+				variables[v]=map_type(*itr1,i);
+				}
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			
 			if(!variables.count(v))

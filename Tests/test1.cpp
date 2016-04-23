@@ -1,9 +1,20 @@
-/* This file tests the functions present in supporting_libs.h
-*/
+/** @file test1.cpp
+ *  @brief Test the artificial string library function 
+ *   We are testing the artificial string functions on some trivial and corner cases strings and comparing it with expected output
+ *  @bug No known bugs.
+ */
 #include <limits.h>
 #include "../Source/Header/supporting_libs/supporting_libs.h"
 #include "gtest/gtest.h"
 #include<string>
+
+ /** @brief This is a Test function to check 
+ *         if capitalize function works.
+ *
+ *  It defines a class of source code and runs the capitalize string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 
 TEST (capitialize, trivialnull) {
 	artificial_string abc= artificial_string("@8.41#$");
@@ -21,6 +32,14 @@ abc.str="We like CS242";
 ASSERT_STREQ("We like CS242",abc.str.c_str());
 }
 //==================================================================================================
+ /** @brief This is a Test function to check 
+ *         if len function works.
+ *
+ *  It defines a class of source code and runs the len string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
+
 
 TEST (len, trivialnull){
 	artificial_string abc= artificial_string("");
@@ -36,7 +55,13 @@ TEST (len, otherlengths){                                              //To Test
 	ASSERT_EQ(7,abc.len());
 }
 //===================================================================================================
-
+ /** @brief This is a Test function to check 
+ *         if upper function works.
+ *
+ *  It defines a class of source code and runs the upper string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */
 TEST (upper, trivialnull){
 	artificial_string abc= artificial_string("");
 	abc.upper();
@@ -55,7 +80,13 @@ abc.upper();
 ASSERT_STREQ("WE LIKE CS242",abc.str.c_str());
 }
 //===================================================================================================
-
+ /** @brief This is a Test function to check 
+ *         if max function works.
+ *
+ *  It defines a class of source code and runs the max string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */max
 TEST (max, trivialnull){
 	artificial_string abc= artificial_string("@!@#443243646");
 	EXPECT_EQ(' ',abc.max());
@@ -77,7 +108,13 @@ TEST (max, diffstrings) {                                       //To Test the ma
 	ASSERT_EQ(' ',abc.max());
 }
 //====================================================================================================
-
+ /** @brief This is a Test function to check 
+ *         if lower function works.
+ *
+ *  It defines a class of source code and runs the lower string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */lower
 TEST (lower, trivialnull){
 	artificial_string abc= artificial_string("");
 	abc.lower();
@@ -100,7 +137,13 @@ ASSERT_STREQ("we like cs242",abc.str.c_str());
 }
 
 //====================================================================================================
-
+ /** @brief This is a Test function to check 
+ *         if min function works.
+ *
+ *  It defines a class of source code and runs the min string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */min
 TEST (min, trivialnull){
 artificial_string abc= artificial_string("@!@#443243646");
 	EXPECT_EQ(' ',abc.min());
@@ -121,7 +164,13 @@ abc.str="zZaA@!";
 	ASSERT_EQ(' ',abc.min());
 }	
 //====================================================================================================
-
+ /** @brief This is a Test function to check 
+ *         if swapcase function works.
+ *
+ *  It defines a class of source code and runs the swapcase string function
+ *  @param Nil.
+ *  @return If the testcase is passed or not.
+ */swapcase
 TEST (swapcase, trivialnull){
 artificial_string abc= artificial_string("");
 	abc.swapcase();

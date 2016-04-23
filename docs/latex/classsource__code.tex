@@ -1,0 +1,134 @@
+\hypertarget{classsource__code}{\section{source\-\_\-code Class Reference}
+\label{classsource__code}\index{source\-\_\-code@{source\-\_\-code}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsource__code_abaa948e56e2fcd50d4ce693f724d8687}{{\bfseries source\-\_\-code} (std\-::string \&st)}\label{classsource__code_abaa948e56e2fcd50d4ce693f724d8687}
+
+\item 
+void \hyperlink{classsource__code_aa728639debb35735e26b6263640af582}{functionize} ()
+\begin{DoxyCompactList}\small\item\em Evaluate the python code to break into functions This function takes out the function from python code by undrstanding the length of code that belongs to each function. \end{DoxyCompactList}\item 
+\hypertarget{classsource__code_a3738fc644f820ae38c544b7a07b34141}{void {\bfseries make\-\_\-classes} ()}\label{classsource__code_a3738fc644f820ae38c544b7a07b34141}
+
+\item 
+void \hyperlink{classsource__code_a2bef035b81554f6bf620603d561af9a7}{generate\-\_\-cpp\-\_\-code} ()
+\begin{DoxyCompactList}\small\item\em Sends all functions except main function to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}. \end{DoxyCompactList}\item 
+void \hyperlink{classsource__code_a75aeef71dfeb0cdc150e7e4ef9f1cf51}{generate\-\_\-cpp\-\_\-classes} ()
+\begin{DoxyCompactList}\small\item\em Sends all classes to convert\-\_\-to\-\_\-cpp\-\_\-classes.\-cpp. \end{DoxyCompactList}\item 
+void \hyperlink{classsource__code_a5a9ae302faa54d8e263f1b5c5571f5b1}{render\-\_\-code} ()
+\begin{DoxyCompactList}\small\item\em Renders the code in proper format in the output C++ file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classsource__code_a61579010356f4139ec9c2891a16e1687}{char $\ast$ {\bfseries file\-\_\-name}}\label{classsource__code_a61579010356f4139ec9c2891a16e1687}
+
+\item 
+\hypertarget{classsource__code_ab26a720dc9bae50f42103f8b286cf540}{std\-::vector$<$ line\-\_\-pair $>$ {\bfseries lines}}\label{classsource__code_ab26a720dc9bae50f42103f8b286cf540}
+
+\item 
+\hypertarget{classsource__code_a75b5ed93456a4bbabf7eaad560630d00}{std\-::vector$<$ int\-\_\-pair $>$ {\bfseries functions}}\label{classsource__code_a75b5ed93456a4bbabf7eaad560630d00}
+
+\item 
+\hypertarget{classsource__code_a7fab8b727420c921c947eae6a721b28c}{std\-::vector$<$ int\-\_\-pair $>$ {\bfseries classes}}\label{classsource__code_a7fab8b727420c921c947eae6a721b28c}
+
+\item 
+\hypertarget{classsource__code_ab0191312e5d53f4edf5d9f72d583cc2f}{std\-::vector$<$ std\-::pair\\*
+$<$ std\-::string, \\*
+\hyperlink{structfunction__declaration}{function\-\_\-declaration} $>$ $>$ {\bfseries generated\-\_\-cpp\-\_\-code}}\label{classsource__code_ab0191312e5d53f4edf5d9f72d583cc2f}
+
+\item 
+\hypertarget{classsource__code_ae3504d0b10056a8876f3023395e0eeba}{std\-::vector$<$ std\-::pair\\*
+$<$ std\-::string, \\*
+\hyperlink{structclass__declaration}{class\-\_\-declaration} $>$ $>$ {\bfseries generated\-\_\-cpp\-\_\-classes}}\label{classsource__code_ae3504d0b10056a8876f3023395e0eeba}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classsource__code_aa728639debb35735e26b6263640af582}{\index{source\-\_\-code@{source\-\_\-code}!functionize@{functionize}}
+\index{functionize@{functionize}!source_code@{source\-\_\-code}}
+\subsubsection[{functionize}]{\setlength{\rightskip}{0pt plus 5cm}void source\-\_\-code\-::functionize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsource__code_aa728639debb35735e26b6263640af582}
+
+
+Evaluate the python code to break into functions This function takes out the function from python code by undrstanding the length of code that belongs to each function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N\-I\-L} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+functions to convert\-\_\-to\-\_\-cpp 
+\end{DoxyReturn}
+\hypertarget{classsource__code_a75aeef71dfeb0cdc150e7e4ef9f1cf51}{\index{source\-\_\-code@{source\-\_\-code}!generate\-\_\-cpp\-\_\-classes@{generate\-\_\-cpp\-\_\-classes}}
+\index{generate\-\_\-cpp\-\_\-classes@{generate\-\_\-cpp\-\_\-classes}!source_code@{source\-\_\-code}}
+\subsubsection[{generate\-\_\-cpp\-\_\-classes}]{\setlength{\rightskip}{0pt plus 5cm}void source\-\_\-code\-::generate\-\_\-cpp\-\_\-classes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsource__code_a75aeef71dfeb0cdc150e7e4ef9f1cf51}
+
+
+Sends all classes to convert\-\_\-to\-\_\-cpp\-\_\-classes.\-cpp. 
+
+It takes in the classes from python code and send it convert\-\_\-to\-\_\-cpp\-\_\-classes.\-cpp to make classes in C++. 
+\begin{DoxyParams}{Parameters}
+{\em N\-I\-L} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+\hypertarget{classsource__code_a2bef035b81554f6bf620603d561af9a7}{\index{source\-\_\-code@{source\-\_\-code}!generate\-\_\-cpp\-\_\-code@{generate\-\_\-cpp\-\_\-code}}
+\index{generate\-\_\-cpp\-\_\-code@{generate\-\_\-cpp\-\_\-code}!source_code@{source\-\_\-code}}
+\subsubsection[{generate\-\_\-cpp\-\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}void source\-\_\-code\-::generate\-\_\-cpp\-\_\-code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsource__code_a2bef035b81554f6bf620603d561af9a7}
+
+
+Sends all functions except main function to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}. 
+
+It takes in the function form of python code and send it to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp} to make functions other than main. 
+\begin{DoxyParams}{Parameters}
+{\em total} & source code \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+\hypertarget{classsource__code_a5a9ae302faa54d8e263f1b5c5571f5b1}{\index{source\-\_\-code@{source\-\_\-code}!render\-\_\-code@{render\-\_\-code}}
+\index{render\-\_\-code@{render\-\_\-code}!source_code@{source\-\_\-code}}
+\subsubsection[{render\-\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}void source\-\_\-code\-::render\-\_\-code (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classsource__code_a5a9ae302faa54d8e263f1b5c5571f5b1}
+
+
+Renders the code in proper format in the output C++ file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em N\-I\-L} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+Source/\-Header/include/\hyperlink{source__code_8h}{source\-\_\-code.\-h}\item 
+Source/src/\hyperlink{functionize_8cpp}{functionize.\-cpp}\item 
+Source/src/\hyperlink{generate__cpp__code_8cpp}{generate\-\_\-cpp\-\_\-code.\-cpp}\item 
+Source/src/\hyperlink{generated__cpp__classes_8cpp}{generated\-\_\-cpp\-\_\-classes.\-cpp}\item 
+Source/src/make\-\_\-classes.\-cpp\item 
+Source/src/\hyperlink{render__code_8cpp}{render\-\_\-code.\-cpp}\end{DoxyCompactItemize}

@@ -1,4 +1,8 @@
-//this file defines the structure for storing the classes.
+/** @file class_struct.h
+ *  @brief This file defines the structure for storing the classes.
+ *  @bug No known bugs.
+ */
+
 
 
 #ifndef class_struct_def
