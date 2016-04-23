@@ -29,11 +29,19 @@
  */
 TEST (functionize,boundaryconditions){
 		std::string input_src;
-	FILE *fp = fopen("f.py","r");
-	char buf[chunk];
+	if (FILE *fp = fopen("functionize/f.py","r"))
+	{
+		char buf[chunk];
 		while (size_t len = fread(buf, 1, sizeof(buf), fp))
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
+
+		
+	}
+	else {
+		std::cout<<"Unable to open source file (main.cpp)\n";
+	exit(0);
+	}
 	source_code input_code(input_src);
 	input_code.functionize();
 	std::vector<line_pair>::iterator itr=input_code.lines.begin();
@@ -51,11 +59,19 @@ EXPECT_STREQ("s2=067890123456789012345678901234567890123456789012345678901234567
  */
 TEST (functionize,separation_of_comments){
 std::string input_src;
-	FILE *fp = fopen("f1.py","r");
-	char buf[chunk];
+	if (FILE *fp = fopen("functionize/f1.py","r"))
+	{
+		char buf[chunk];
 		while (size_t len = fread(buf, 1, sizeof(buf), fp))
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
+
+		
+	}
+	else {
+		std::cout<<"Unable to open source file (main.cpp)\n";
+		exit(0);
+	} 		
 	source_code input_code(input_src);
 	input_code.functionize();
 	std::vector<line_pair>::iterator itr=input_code.lines.begin();
@@ -74,11 +90,19 @@ std::string input_src;
  */
 TEST (functionize,random_function){
 	std::string input_src;
-	FILE *fp = fopen("f2.py","r");
-	char buf[chunk];
+	if (FILE *fp = fopen("functionize/f2.py","r"))
+	{
+		char buf[chunk];
 		while (size_t len = fread(buf, 1, sizeof(buf), fp))
 			input_src.insert(input_src.end(), buf, buf + len);
 		fclose(fp);
+
+		
+	}
+	else {
+		std::cout<<"Unable to open source file (main.cpp)\n";
+	exit(0);
+	}
 	source_code input_code(input_src);
 	input_code.functionize();
 	std::vector<line_pair>::iterator itr=input_code.lines.begin();
@@ -101,7 +125,3 @@ TEST (functionize,random_function){
 	ASSERT_EQ(0,itr->second);
 }
 
-int main(int argc, char **argv) {
-::testing::InitGoogleTest(&argc, argv);
-return RUN_ALL_TESTS();
-}

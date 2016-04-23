@@ -1,7 +1,11 @@
 class counter:
-	if 1:
-		print "hi"
-		count=2
+	c = 0
+	def inc(self): void
+		self.c = self.c+1
 
-n = 0
-print n
+
+
+cc = counter() : counter
+print cc.c
+cc.inc()
+print cc.c

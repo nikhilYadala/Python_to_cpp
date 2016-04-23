@@ -41,6 +41,11 @@ bool hash_tables::insert(value_type &v)
 }
 */
 
+
+/**
+*Its not working!!
+*/
+
 class artificial_string : public std::string
 {
 public:
@@ -78,7 +83,8 @@ public:
     artificial_string(std::string s){
         str = s;
     }
-     /** @brief This is a string function to find if the first
+
+/** @brief This is a string function to find if the first
  *         letter is capital in the artificial string
  *
  *  @param Works on artificial string str
@@ -94,10 +100,11 @@ public:
 
            return artificial_string(str);
         }
+        else return artificial_string("");
 
     }
 
-    /** @brief This is a string function to find the string length of artificial string
+/** @brief This is a string function to find the string length of artificial string
  *
  *  @param Works on artificial string str
  *  @return size of the artificial string
@@ -106,7 +113,8 @@ public:
     {
         return str.size();   //To return the sting length
     }
-   /** @brief This is a string function to convert the artificial string 
+
+/** @brief This is a string function to convert the artificial string 
  *         to all capital
  *
  *  @param Works on artificial string str
@@ -126,8 +134,11 @@ public:
 
         return artificial_string(str);
     }
+    else return artificial_string("");
 
    }
+
+
 /** @brief This is a string function to convert the artificial string 
  *         to small letters
  *

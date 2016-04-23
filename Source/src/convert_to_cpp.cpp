@@ -46,7 +46,10 @@ bool is_symbol(char c){
 
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
-	if(expr[0]=='"')
+	if(variables.count(expr))
+		return variables[expr];
+
+	if(expr.substr(0,17)=="artificial_string")
 		return "artificial_string";
 	if(isdigit(expr[0]) || expr[0]=='-')
 	{
@@ -101,10 +104,25 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 	
 }
 
+std::string map_type(std::string s, int l)
+{
+	if(s=="int")
+		return "long int";
+	if(s=="float")
+		return "float";
+	if(s=="s")
+		return "artificial_string";
+	else {
+		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+		return s;
+	}
+
+}
+
+
 std::string itoa(int number)
 {
-
-	std::ostringstream oss;
+std::ostringstream oss;
   oss<< number;
   return oss.str();
 }
@@ -116,7 +134,6 @@ void convert_to_cpp(unsigned long int start,
 					function_declaration* _function,
 					std::map< std::string,std::string >& variables )
 {
-
 
 // std::cout<<src.lines[itr1->first].first;
 	std::vector< std::string > tokens;
@@ -134,30 +151,21 @@ void convert_to_cpp(unsigned long int start,
 
 	if(tokens[0]=="def")
 	{
-
+		_function->return_type="";
 		_function->name=tokens[1];	
-		std::vector< std::string >::iterator itr;
+		std::vector< std::string >::iterator itr,itr1=tokens.begin();
+
+		while(*(itr1++)!=":");
 
 		for(itr=tokens.begin()+3;;itr++){
 			if(*itr == ",")
 				continue;
 			if(*(itr)==")")
 				break;
-			_function->args.push_back(std::pair< std::string,std::string >(*itr,""));
+			_function->args.push_back(std::pair< std::string,std::string >(*itr,map_type(*itr1,start)));
+			itr1++;
 		}
 
-		while(*(itr++)!=":");	//skip ':' of function declaration
-		
-		//After every function declaration put a series of example values
-
-		int i=0;
-		while(itr!=tokens.end())
-		{
-			if(*(itr++)!=","){
-				_function->args[i++].second=expr_type(*(itr-1),variables);
-			}
-			
-		}
 	}
 	for(std::vector< string_pair >::iterator itr=_function->args.begin();itr!=_function->args.end();++itr)
 			variables[itr->first]=itr->second;
@@ -232,7 +240,7 @@ void convert_to_cpp(unsigned long int start,
 				if(!f||*itr!=",")
 					converted_code.append(*itr);
 				if(f&&*itr==",")
-					converted_code.append("<<");
+					converted_code.append("<<\"  \"<<");
 				itr++;
 			}
 			converted_code.append(";\n");
@@ -357,7 +365,7 @@ void convert_to_cpp(unsigned long int start,
 			converted_code.append("=");
 			converted_code.append((start_range));
 			converted_code.append(";").append(var).append("<=").append((end_range)).append(";");
-			converted_code.append(var).append("++;)\n");//starting the for loop with {
+			converted_code.append(var).append("++)\n");//starting the for loop with {
 				// i++;  //to go next line
 			spaces = (size_t)lines[i].second;
 			converted_code.append(spaces*tab_size,' ');
@@ -379,6 +387,7 @@ void convert_to_cpp(unsigned long int start,
 
 		else if (*itr!="def")	//treat every foreign token as variable name or function
 		{
+
 			std::string v=*itr;
 			std::string expr="";
 			bool is_function_call=1;
@@ -386,17 +395,80 @@ void convert_to_cpp(unsigned long int start,
 				is_function_call=0;
 				itr=itr+2;	//skip = sign
 			}
-			while(itr!=tokens.end())
+
+			if(*itr=="raw_input")
+			{
+				itr++;
+				bool f = 0;
+				int i = 0;
+				expr.append(*(itr+1));
+				while(*itr!=":") {
+					i++;
+					// if(*itr=="(") f=1;
+					// if(!f) expr.append(*itr);
+					itr++;
+					if(i==1000000)
+					{
+						std::cout<<": missing on line "<<i<<std::endl;
+						exit(0);
+					}
+				}
+				std::cout<<"GDFDDDDDDDCC"<<expr<"GDDDDDDDDD\n";
+				itr++;
+				variables[v]=map_type(*itr,i);
+				converted_code.append((size_t)lines[i].second*tab_size,' ');			
+				converted_code.append(variables[v]);
+				if(variables[v]=="artificial_string")
+					converted_code.append(" "+v+"(\"\");\n");					
+				else converted_code.append(" "+v+";\n"	);
+
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cout<<");
+				converted_code.append(expr);
+				converted_code.append(";\n");
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cin>>");
+				converted_code.append(v);
+				converted_code.append(";\n");
+				
+			}
+			else{
+			if(is_function_call)
+				while(itr!=tokens.end()) expr.append(*itr++);
+			else{
+			while(*itr!=":" && itr!=tokens.end())
 				expr.append(*itr++);
+			}
+
+			bool type_annotated = 1;
+			if(itr == tokens.end())
+			{
+				type_annotated = 0;
+				if(!is_function_call)
+					std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
+			}
+
+			std::vector< std::string >::iterator itr1 = itr;
+			if(type_annotated)	{
+				itr1 = itr+1;
+			}
+
     		expr = eval_expr(expr);
 
 			if(!is_function_call){
-				bool not_decl = (variables.find(v) != variables.end());
-				variables[v]=expr_type(expr,variables);
-			
-			converted_code.append((size_t)lines[i].second*tab_size,' ');
-			if(!variables.count(v))
+			bool not_decl = (variables.find(v) != variables.end());
 
+			if(!type_annotated)
+				variables[v]=expr_type(expr,variables);
+			else {
+				variables[v]="dfsg";
+				std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
+
+				variables[v]=map_type(*itr1,i);
+				}
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+			
+			if(!variables.count(v))
 			{//this bracket to be closed
 			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
 				converted_code.append(variables[v]);
@@ -406,8 +478,6 @@ void convert_to_cpp(unsigned long int start,
 			// {
 
 			// }
-
-
 			else if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
@@ -419,11 +489,12 @@ void convert_to_cpp(unsigned long int start,
 				converted_code.append((size_t)lines[i].second*tab_size,' ');
 				converted_code.append(expr);
 				converted_code.append(";\n");
-
 			}
-
+		}
 			i++;
 			continue;
+
+
 
 		}	 
 		i++;							// if nothing gets caught

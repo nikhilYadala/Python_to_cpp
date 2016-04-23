@@ -38,6 +38,7 @@ void source_code::generate_cpp_classes() //declard in source_code.h
       std::cout<<"line numbers are "<<itr->first<<"to "<<itr->second<<"    kkkkk\n";
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
         //removing the class name from the converted code.
+
          for(int j=0;j<converted_code.size();j++)
              {
               if(converted_code[j]!='\n')
