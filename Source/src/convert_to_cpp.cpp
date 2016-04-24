@@ -499,25 +499,22 @@ void convert_to_cpp(unsigned long int start,
 
 			if(!type_annotated)
 				variables[v]=expr_type(expr,variables);
-			else {
-				variables[v]="dfsg";
-				std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
-
+			else
 				variables[v]=map_type(*itr1,i);
-				}
+				
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			
-			if(!variables.count(v))
-			{//this bracket to be closed
-			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
-				converted_code.append(variables[v]);
-			}
+			// if(!variables.count(v))
+			// {//this bracket to be closed
+			//    if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
+			// 	converted_code.append(variables[v]);
+			// }
 
 			// else if(variable[v]=="list")
 			// {
 
 			// }
-			else if(!not_decl) converted_code.append(expr_type(v,variables));	
+			if(!not_decl) converted_code.append(expr_type(v,variables));	
 			converted_code.append(" ");
 			converted_code.append(v);
 			converted_code.append(" = ");
