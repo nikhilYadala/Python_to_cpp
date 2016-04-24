@@ -249,6 +249,10 @@ void convert_to_cpp_classes(unsigned long int start,
 				converted_code.append(final_class->name).append("(");
 			else{
 			converted_code.append(converted_function_declaration.return_type).append(" ");
+			//the funciton can be a constructor
+			if(converted_function_declaration.name=="__init__")
+				converted_code.append(final_class->name).append("(");
+			else
 			converted_code.append(converted_function_declaration.name).append("(");
 			}
 			 for(std::vector< string_pair >::iterator j=converted_function_declaration.args.begin();j!=converted_function_declaration.args.end();++j)
