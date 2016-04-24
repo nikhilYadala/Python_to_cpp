@@ -442,6 +442,7 @@ void convert_to_cpp(unsigned long int start,
 		{
 
 			std::string v=*itr;
+			std::cout<<"::::::::::::"<<v<<"::::::::::\n\n";
 			std::string expr="";
 			bool is_function_call=1;
 			if(*(itr+1)=="="){

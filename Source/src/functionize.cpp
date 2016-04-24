@@ -31,10 +31,12 @@ void self_sanitize(std::string* code) {
     }
 
     int rem = code->find("re.search(");
+    if(rem!=std::string::npos){
     itr =  code->find("re.search(")+10;
     	// std::cout<<">>>>>>>>>>>"<<itr<<"  "<<"\n";
     while(*(code->begin()+itr)==' ')
     	itr++;
+
 
     std::string s ="",r="";
     while(*(code->begin()+itr)!=','){
@@ -52,7 +54,8 @@ void self_sanitize(std::string* code) {
     while(itr != std::string::npos) {
         code->replace(itr, rem, "std::regex_match("+s+",std::regex("+r+"))"); 
         itr = code->find("re.search(", itr);
-    }
+    	}
+	}
 	// if(std::find(tokens.begin(), tokens.end(),"re.search")!=tokens.end())
 	// {
 	// 	converted_code.append((size_t)lines[i].second*tab_size,' ');	
@@ -70,6 +73,7 @@ void self_sanitize(std::string* code) {
 
 void source_code::functionize()
 {
+
 	code.push_back('\n');
 	self_sanitize(&code);
 	std::cout<<code<<"\n\n\n";
@@ -115,7 +119,6 @@ void source_code::functionize()
 		   // std::cout<<"lin"<<itr-lines.begin()<<": "<<itr->second<<"          "<<itr->first<<"\n"; 
 
 	functions.resize(1);//Add sparse code here later
-
 	only_functions=1;
 
 	for(std::vector< line_pair >::iterator itr=lines.begin();itr!=lines.end();)
