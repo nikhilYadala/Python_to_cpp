@@ -244,12 +244,13 @@ void convert_to_cpp_classes(unsigned long int start,
 			//rendering the code for function
 			if(converted_function_declaration.return_type == "")
 				converted_function_declaration.return_type = "void";
-			converted_code.append(converted_function_declaration.return_type).append(" ");
 			//the funciton can be a constructor
 			if(converted_function_declaration.name=="__init__")
 				converted_code.append(final_class->name).append("(");
-			else
+			else{
+			converted_code.append(converted_function_declaration.return_type).append(" ");
 			converted_code.append(converted_function_declaration.name).append("(");
+			}
 			 for(std::vector< string_pair >::iterator j=converted_function_declaration.args.begin();j!=converted_function_declaration.args.end();++j)
 			 {
 			 	converted_code.append(j->second).append(" "); //arg datatype

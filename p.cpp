@@ -5,18 +5,16 @@ class counter
  public: 
               
     long int c = 0;
-void inc()
+counter(long int n)
 {
-         c = c+1;
+         c = n;
 
 }
 
 };
 int main( )
 {
-counter cc = counter();
-std::cout<<cc.c;
-cc.inc();
+counter cc = counter(2);
 std::cout<<cc.c;
  
 return 0;

@@ -43,7 +43,6 @@ void source_code::generate_cpp_classes() //declard in source_code.h
      for(std::vector < int_pair >::iterator itr=classes.begin();itr!=classes.end();itr++)
      {
       converted_code.clear();
-      std::cout<<"line numbers are "<<itr->first<<"to "<<itr->second<<"    kkkkk\n";
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
         //removing the class name from the converted code.
 
