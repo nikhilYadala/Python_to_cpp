@@ -56,6 +56,10 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
 				return "double";
+			else if(*i=='[')
+				return "list"; //for python lists to cpp arrays
+			else if(*i=='{')
+				return "dict" //for python dictonaries to cpp maps
 		return "long int";
 	}	
 	std::string::iterator itr=expr.begin();
@@ -395,7 +399,7 @@ void convert_to_cpp(unsigned long int start,
 				is_function_call=0;
 				itr=itr+2;	//skip = sign
 			}
-
+			//if the functin is is to respond from stdIn
 			if(*itr=="raw_input")
 			{
 				itr++;
@@ -432,6 +436,7 @@ void convert_to_cpp(unsigned long int start,
 				converted_code.append(";\n");
 				
 			}
+			//all other function calls and varible declarations and procesing
 			else{
 			if(is_function_call)
 				while(itr!=tokens.end()) expr.append(*itr++);
@@ -439,7 +444,7 @@ void convert_to_cpp(unsigned long int start,
 			while(*itr!=":" && itr!=tokens.end())
 				expr.append(*itr++);
 			}
-
+			//if the type is expliciyly mentioneand do u hhave passport here, mine is at home 
 			bool type_annotated = 1;
 			if(itr == tokens.end())
 			{
@@ -455,37 +460,38 @@ void convert_to_cpp(unsigned long int start,
 
     		expr = eval_expr(expr);
 
-			if(!is_function_call){
-			bool not_decl = (variables.find(v) != variables.end());
+			if(!is_function_call)
+			{
+				bool not_decl = (variables.find(v) != variables.end());
 
-			if(!type_annotated)
-				variables[v]=expr_type(expr,variables);
-			else {
-				variables[v]="dfsg";
-				std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
+				if(!type_annotated)
+					variables[v]=expr_type(expr,variables);
+				else {
+					variables[v]="dfsg";
+					std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
 
-				variables[v]=map_type(*itr1,i);
+					variables[v]=map_type(*itr1,i);
+					}
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				
+				if(!variables.count(v))
+				{//this bracket to be closed
+				   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
+					converted_code.append(variables[v]);
 				}
-			converted_code.append((size_t)lines[i].second*tab_size,' ');
-			
-			if(!variables.count(v))
-			{//this bracket to be closed
-			   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
-				converted_code.append(variables[v]);
-			}
 
-			// else if(variable[v]=="list")
-			// {
+				// else if(variable[v]=="list")
+				// {
 
-			// }
-			else if(!not_decl) converted_code.append(expr_type(v,variables));	
-			converted_code.append(" ");
-			converted_code.append(v);
-			converted_code.append(" = ");
-			converted_code.append(expr);
-			converted_code.append(";\n");
+				// }
+				else if(!not_decl) converted_code.append(expr_type(v,variables));	
+				converted_code.append(" ");
+				converted_code.append(v);
+				converted_code.append(" = ");
+				converted_code.append(expr);
+				converted_code.append(";\n");
 			}
-			else{
+			else{// if it is a function call
 				converted_code.append((size_t)lines[i].second*tab_size,' ');
 				converted_code.append(expr);
 				converted_code.append(";\n");
