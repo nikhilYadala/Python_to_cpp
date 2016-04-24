@@ -1,3 +1,7 @@
+/** @file generate_cpp_code.cpp
+ *  @brief This file sends the functions from functionize to convert_to_cpp.cpp
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <string>
 #include <string.h>
@@ -10,7 +14,12 @@
 //convert_to_cpp is defined in convert_to_cpp file
 void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );
 
-
+/** @brief Specially sends main function to convert_to_cpp.cpp
+ *
+ *  It takes in the function form of python code and send it to convert_to_cpp.cpp to convert it to main function  
+ *  @param total source code 
+ *  @return NIL 
+ */
 void main_func(source_code& src)
 {
 	function_declaration _function;
@@ -26,7 +35,12 @@ void main_func(source_code& src)
 	src.generated_cpp_code[0].second=_function;	
 }
 
-
+/** @brief Sends all functions except main function to convert_to_cpp.cpp
+ *
+ *  It takes in the function form of python code and send it to convert_to_cpp.cpp to make functions other than main.  
+ *  @param total source code 
+ *  @return NIL 
+ */
 void source_code::generate_cpp_code()
 {
 

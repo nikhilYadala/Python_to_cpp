@@ -1,0 +1,184 @@
+\hypertarget{convert__to__cpp_8cpp}{\section{Source/src/convert\-\_\-to\-\_\-cpp.cpp File Reference}
+\label{convert__to__cpp_8cpp}\index{Source/src/convert\-\_\-to\-\_\-cpp.\-cpp@{Source/src/convert\-\_\-to\-\_\-cpp.\-cpp}}
+}
+
+
+This file converts the python code to C++ code in order given to it.  
+
+
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include \char`\"{}../\-Header/include/function\-\_\-struct.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../\-Header/include/source\-\_\-code.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{convert__to__cpp_8cpp_a21c1bfd8feaefba529e0c220836b29ee}{eval\-\_\-expr} (std\-::string \&s)
+\begin{DoxyCompactList}\small\item\em Evaluate the python code to C++ code. \end{DoxyCompactList}\item 
+bool \hyperlink{convert__to__cpp_8cpp_ab9dd2b78c85900f6d49a2457c4cb99d0}{is\-\_\-symbol} (char c)
+\begin{DoxyCompactList}\small\item\em Checks the special symbols used. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{convert__to__cpp_8cpp_ab797c01777c71119ed06da98053d1812}{expr\-\_\-type} (std\-::string \&expr, std\-::map$<$ std\-::string, std\-::string $>$ \&variables)
+\begin{DoxyCompactList}\small\item\em Decides the type of the variable. \end{DoxyCompactList}\item 
+void \hyperlink{convert__to__cpp_8cpp_a9aad2372701a968f1a9517d6f52c8e12}{break\-\_\-into\-\_\-words} (std\-::string \&line, std\-::vector$<$ std\-::string $>$ \&tokens)
+\begin{DoxyCompactList}\small\item\em Breaks the python string to words. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{convert__to__cpp_8cpp_a653b093fe6844a0f3111cff6a9f448ea}{map\-\_\-type} (std\-::string s, int l)
+\begin{DoxyCompactList}\small\item\em Wraps mentioned type of variable. \end{DoxyCompactList}\item 
+std\-::string \hyperlink{convert__to__cpp_8cpp_a2279105a73ae9907985afc9c451d354e}{itoa} (int number)
+\begin{DoxyCompactList}\small\item\em Converts the integer into string. \end{DoxyCompactList}\item 
+void \hyperlink{convert__to__cpp_8cpp_a6c9b7704837b714c714081745485127d}{convert\-\_\-to\-\_\-cpp} (unsigned long int start, unsigned long int end, std\-::vector$<$ line\-\_\-pair $>$ \&lines, std\-::string \&converted\-\_\-code, \hyperlink{structfunction__declaration}{function\-\_\-declaration} $\ast$\-\_\-function, std\-::map$<$ std\-::string, std\-::string $>$ \&variables)
+\begin{DoxyCompactList}\small\item\em Converts Python code to C++ code in order. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file converts the python code to C++ code in order given to it. \begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000003}{Bug}]No known bugs. \end{DoxyRefDesc}
+
+
+\subsection{Function Documentation}
+\hypertarget{convert__to__cpp_8cpp_a9aad2372701a968f1a9517d6f52c8e12}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!break\-\_\-into\-\_\-words@{break\-\_\-into\-\_\-words}}
+\index{break\-\_\-into\-\_\-words@{break\-\_\-into\-\_\-words}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{break\-\_\-into\-\_\-words}]{\setlength{\rightskip}{0pt plus 5cm}void break\-\_\-into\-\_\-words (
+\begin{DoxyParamCaption}
+\item[{std\-::string \&}]{line, }
+\item[{std\-::vector$<$ std\-::string $>$ \&}]{tokens}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_a9aad2372701a968f1a9517d6f52c8e12}
+
+
+Breaks the python string to words. 
+
+It breaks the python string into words and breaks into token 
+\begin{DoxyParams}{Parameters}
+{\em python} & string \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_a6c9b7704837b714c714081745485127d}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!convert\-\_\-to\-\_\-cpp@{convert\-\_\-to\-\_\-cpp}}
+\index{convert\-\_\-to\-\_\-cpp@{convert\-\_\-to\-\_\-cpp}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{convert\-\_\-to\-\_\-cpp}]{\setlength{\rightskip}{0pt plus 5cm}void convert\-\_\-to\-\_\-cpp (
+\begin{DoxyParamCaption}
+\item[{unsigned long int}]{start, }
+\item[{unsigned long int}]{end, }
+\item[{std\-::vector$<$ line\-\_\-pair $>$ \&}]{lines, }
+\item[{std\-::string \&}]{converted\-\_\-code, }
+\item[{{\bf function\-\_\-declaration} $\ast$}]{\-\_\-function, }
+\item[{std\-::map$<$ std\-::string, std\-::string $>$ \&}]{variables}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_a6c9b7704837b714c714081745485127d}
+
+
+Converts Python code to C++ code in order. 
+
+It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending. 
+\begin{DoxyParams}{Parameters}
+{\em starting} & line, ending line,vector of lines of code, function parameters, variables table \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_a21c1bfd8feaefba529e0c220836b29ee}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!eval\-\_\-expr@{eval\-\_\-expr}}
+\index{eval\-\_\-expr@{eval\-\_\-expr}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{eval\-\_\-expr}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string eval\-\_\-expr (
+\begin{DoxyParamCaption}
+\item[{std\-::string \&}]{s}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_a21c1bfd8feaefba529e0c220836b29ee}
+
+
+Evaluate the python code to C++ code. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em python} & expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+converted C++ expression. 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_ab797c01777c71119ed06da98053d1812}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!expr\-\_\-type@{expr\-\_\-type}}
+\index{expr\-\_\-type@{expr\-\_\-type}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{expr\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string expr\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{std\-::string \&}]{expr, }
+\item[{std\-::map$<$ std\-::string, std\-::string $>$ \&}]{variables}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_ab797c01777c71119ed06da98053d1812}
+
+
+Decides the type of the variable. 
+
+It checks and decides the type of variables in C++ for corresponding variable in python 
+\begin{DoxyParams}{Parameters}
+{\em python} & expression \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+C++ type for the variable 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_ab9dd2b78c85900f6d49a2457c4cb99d0}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!is\-\_\-symbol@{is\-\_\-symbol}}
+\index{is\-\_\-symbol@{is\-\_\-symbol}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{is\-\_\-symbol}]{\setlength{\rightskip}{0pt plus 5cm}bool is\-\_\-symbol (
+\begin{DoxyParamCaption}
+\item[{char}]{c}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_ab9dd2b78c85900f6d49a2457c4cb99d0}
+
+
+Checks the special symbols used. 
+
+It reads the character and checks if it is a special symbol used in python 
+\begin{DoxyParams}{Parameters}
+{\em character} & c \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Tells if the read symbol is special or not. 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_a2279105a73ae9907985afc9c451d354e}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!itoa@{itoa}}
+\index{itoa@{itoa}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{itoa}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string itoa (
+\begin{DoxyParamCaption}
+\item[{int}]{number}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_a2279105a73ae9907985afc9c451d354e}
+
+
+Converts the integer into string. 
+
+It converts a integer in its corresponding string form 
+\begin{DoxyParams}{Parameters}
+{\em integer} & number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number as string 
+\end{DoxyReturn}
+\hypertarget{convert__to__cpp_8cpp_a653b093fe6844a0f3111cff6a9f448ea}{\index{convert\-\_\-to\-\_\-cpp.\-cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}!map\-\_\-type@{map\-\_\-type}}
+\index{map\-\_\-type@{map\-\_\-type}!convert_to_cpp.cpp@{convert\-\_\-to\-\_\-cpp.\-cpp}}
+\subsubsection[{map\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string map\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{s, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{convert__to__cpp_8cpp_a653b093fe6844a0f3111cff6a9f448ea}
+
+
+Wraps mentioned type of variable. 
+
+It reads the type if mentioned in the python code 
+\begin{DoxyParams}{Parameters}
+{\em string} & type that has type ,int l \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The type of the variable. 
+\end{DoxyReturn}

@@ -1,6 +1,6 @@
 #include "supporting_libs.h"
 
-void pr(int n)
+void pr(long int n)
 {
     while(n>0)
     {

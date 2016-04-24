@@ -1,5 +1,8 @@
-//this function, sends the code to convert to cpp,and keeps in all the details regarding the classes
-#include <vector>
+/** @file generated_cpp_classes.cpp
+ *  @brief This function, sends the code to convert to cpp,and keeps in all the details regarding the classes
+ *  @bug No known bugs.
+ */
+ #include <vector>
 #include <string>
 #include <string.h>
 #include <iostream>	
@@ -14,7 +17,12 @@
 
 void convert_to_cpp_classes(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,class_declaration* final_class,std::map< std::string,std::string >& variables );
 
-
+/** @brief Sends all classes to convert_to_cpp_classes.cpp
+ *
+ *  It takes in the classes from python code and send it convert_to_cpp_classes.cpp to make classes in C++.    
+ *  @param NIL
+ *  @return NIL 
+ */
 void source_code::generate_cpp_classes() //declard in source_code.h
 {
     	generated_cpp_classes.resize(classes.size()+1);
@@ -35,7 +43,6 @@ void source_code::generate_cpp_classes() //declard in source_code.h
      for(std::vector < int_pair >::iterator itr=classes.begin();itr!=classes.end();itr++)
      {
       converted_code.clear();
-      std::cout<<"line numbers are "<<itr->first<<"to "<<itr->second<<"    kkkkk\n";
        convert_to_cpp_classes(itr->first,itr->second,lines,converted_code,&final_class,variables);
         //removing the class name from the converted code.
 

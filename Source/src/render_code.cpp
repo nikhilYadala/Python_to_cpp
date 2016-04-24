@@ -1,3 +1,7 @@
+ /** @file render_code.cpp
+ *  @brief Renders the code in proper format 
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <string>
 #include <string.h>
@@ -13,7 +17,11 @@
 #include "../Header/include/source_code.h"
 #include "../Header/include/class_struct.h"
 
-
+/** @brief Renders the code in proper format in the output C++ file
+ *
+ *  @param NIL
+ *  @return NIL
+ */
 void source_code::render_code()
 {
 	int s=strlen(file_name);

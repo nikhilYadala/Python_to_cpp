@@ -1,0 +1,73 @@
+\hypertarget{generate__cpp__code_8cpp}{\section{Source/src/generate\-\_\-cpp\-\_\-code.cpp File Reference}
+\label{generate__cpp__code_8cpp}\index{Source/src/generate\-\_\-cpp\-\_\-code.\-cpp@{Source/src/generate\-\_\-cpp\-\_\-code.\-cpp}}
+}
+
+
+This file sends the functions from functionize to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}.  
+
+
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include \char`\"{}../\-Header/include/function\-\_\-struct.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}../\-Header/include/source\-\_\-code.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{generate__cpp__code_8cpp_a6c9b7704837b714c714081745485127d}{convert\-\_\-to\-\_\-cpp} (unsigned long int start, unsigned long int end, std\-::vector$<$ line\-\_\-pair $>$ \&lines, std\-::string \&converted\-\_\-code, \hyperlink{structfunction__declaration}{function\-\_\-declaration} $\ast$\-\_\-function, std\-::map$<$ std\-::string, std\-::string $>$ \&variables)
+\begin{DoxyCompactList}\small\item\em Converts Python code to C++ code in order. \end{DoxyCompactList}\item 
+void \hyperlink{generate__cpp__code_8cpp_a9f819ea86736b14ff39b5b6b50eb0005}{main\-\_\-func} (\hyperlink{classsource__code}{source\-\_\-code} \&src)
+\begin{DoxyCompactList}\small\item\em Specially sends main function to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This file sends the functions from functionize to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}. \begin{DoxyRefDesc}{Bug}
+\item[\hyperlink{bug__bug000005}{Bug}]No known bugs. \end{DoxyRefDesc}
+
+
+\subsection{Function Documentation}
+\hypertarget{generate__cpp__code_8cpp_a6c9b7704837b714c714081745485127d}{\index{generate\-\_\-cpp\-\_\-code.\-cpp@{generate\-\_\-cpp\-\_\-code.\-cpp}!convert\-\_\-to\-\_\-cpp@{convert\-\_\-to\-\_\-cpp}}
+\index{convert\-\_\-to\-\_\-cpp@{convert\-\_\-to\-\_\-cpp}!generate_cpp_code.cpp@{generate\-\_\-cpp\-\_\-code.\-cpp}}
+\subsubsection[{convert\-\_\-to\-\_\-cpp}]{\setlength{\rightskip}{0pt plus 5cm}void convert\-\_\-to\-\_\-cpp (
+\begin{DoxyParamCaption}
+\item[{unsigned long int}]{start, }
+\item[{unsigned long int}]{end, }
+\item[{std\-::vector$<$ line\-\_\-pair $>$ \&}]{lines, }
+\item[{std\-::string \&}]{converted\-\_\-code, }
+\item[{{\bf function\-\_\-declaration} $\ast$}]{\-\_\-function, }
+\item[{std\-::map$<$ std\-::string, std\-::string $>$ \&}]{variables}
+\end{DoxyParamCaption}
+)}}\label{generate__cpp__code_8cpp_a6c9b7704837b714c714081745485127d}
+
+
+Converts Python code to C++ code in order. 
+
+It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending. 
+\begin{DoxyParams}{Parameters}
+{\em starting} & line, ending line,vector of lines of code, function parameters, variables table \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}
+\hypertarget{generate__cpp__code_8cpp_a9f819ea86736b14ff39b5b6b50eb0005}{\index{generate\-\_\-cpp\-\_\-code.\-cpp@{generate\-\_\-cpp\-\_\-code.\-cpp}!main\-\_\-func@{main\-\_\-func}}
+\index{main\-\_\-func@{main\-\_\-func}!generate_cpp_code.cpp@{generate\-\_\-cpp\-\_\-code.\-cpp}}
+\subsubsection[{main\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}void main\-\_\-func (
+\begin{DoxyParamCaption}
+\item[{{\bf source\-\_\-code} \&}]{src}
+\end{DoxyParamCaption}
+)}}\label{generate__cpp__code_8cpp_a9f819ea86736b14ff39b5b6b50eb0005}
+
+
+Specially sends main function to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp}. 
+
+It takes in the function form of python code and send it to \hyperlink{convert__to__cpp_8cpp}{convert\-\_\-to\-\_\-cpp.\-cpp} to convert it to main function 
+\begin{DoxyParams}{Parameters}
+{\em total} & source code \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\-I\-L 
+\end{DoxyReturn}

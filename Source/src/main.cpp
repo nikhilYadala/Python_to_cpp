@@ -1,3 +1,7 @@
+/** @file main.cpp
+ *  @brief main function to run translator
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <iostream>
 #include <stdio.h>
@@ -12,7 +16,12 @@
 
 void render_code(source_code &src);
 
-
+ /** @brief Main Function
+ *   The main  function of translator
+ *   
+ *  @param input python file
+ *  @return COnverted C++ file.
+ */
 int main(int argc, char *argv[])
 {
 

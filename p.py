@@ -1,11 +1,9 @@
 class counter:
 	c = 0
-	def inc(self): void
-		self.c = self.c+1
+	def __init__(self,n): int
+		self.c = n
 
 
 
-cc = counter() : counter
-print cc.c
-cc.inc()
+cc = counter(2) : counter
 print cc.c

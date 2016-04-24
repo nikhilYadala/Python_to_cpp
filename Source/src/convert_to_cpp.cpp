@@ -1,4 +1,7 @@
-
+ /** @file convert_to_cpp.cpp
+ *  @brief This file converts the python code to C++ code in order given to it
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <string>
 #include <string.h>
@@ -12,7 +15,11 @@
 
 #include "../Header/include/function_struct.h"
 #include "../Header/include/source_code.h"
-
+ /** @brief Evaluate the python code to C++ code 
+ *
+ *  @param python expression
+ *  @return converted C++ expression.
+ */
 std::string eval_expr(std::string& s)
 {
 	std::string evaled = "";
@@ -33,7 +40,12 @@ std::string eval_expr(std::string& s)
 
 	return evaled;
 }
-
+ /** @brief Checks the special symbols used 
+ *   
+ *   It reads the character and checks if it is a special symbol used in python 
+ *  @param character c
+ *  @return Tells if the read symbol is special or not.
+ */
 bool is_symbol(char c){
 	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
@@ -43,7 +55,12 @@ bool is_symbol(char c){
 	return 0;
 
 }
-
+ /** @brief Decides the type of the variable 
+ *
+ *   It checks and decides the type of variables in C++ for corresponding variable in python  
+ *  @param python expression 
+ *  @return C++ type for the variable
+ */
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
 	if(variables.count(expr))
@@ -75,7 +92,12 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 	else return "";
 }
 
-
+/** @brief Breaks the python string to words 
+ *
+ *   It breaks the python string into words and breaks into token   
+ *  @param python string 
+ *  @return NIL
+ */
 void break_into_words(std::string& line,std::vector< std::string >& tokens)
 {
 	int flag=1;	//to check if a symbol has been pushed and tokens.end()-1 isn't a continuing token
@@ -107,7 +129,12 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 	}
 	
 }
-
+/** @brief Wraps mentioned type of variable
+ *
+ *  It reads the type if mentioned in the python code  
+ *  @param string type that has type ,int l 
+ *  @return The type of the variable.
+ */
 std::string map_type(std::string s, int l)
 {
 	if(s=="int")
@@ -121,16 +148,28 @@ std::string map_type(std::string s, int l)
 		return s;
 	}
 
+
 }
 
 
+/** @brief Converts the integer into string 
+ *
+ *  It converts a integer in its corresponding string form 
+ *  @param integer number 
+ *  @return number as string
+ */
 std::string itoa(int number)
 {
 std::ostringstream oss;
   oss<< number;
   return oss.str();
 }
-
+/** @brief Converts Python code to C++ code in order 
+ *
+ *  It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending.   
+ *  @param starting line, ending line,vector of lines of code, function parameters, variables table 
+ *  @return NIL 
+ */
 void convert_to_cpp(unsigned long int start,
 					unsigned long int end,
 					std::vector< line_pair >& lines,
@@ -180,9 +219,9 @@ void convert_to_cpp(unsigned long int start,
 	{	
 		tokens.clear();
 		break_into_words(lines[i].first,tokens);
-				// for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
-		// 		std::	cout<<"---"<<*itr<<"-----";
-		// 	std::cout<<"\n\n";
+			// 	for(std::vector< std::string >::iterator itr=tokens.begin();itr!=tokens.end();itr=itr+1)
+			// 	std::	cout<<"---"<<*itr<<"-----";
+			// std::cout<<"\n\n";
 
 		std::vector< std::string >::iterator itr=tokens.begin();		
 		if(*itr=="if" || *itr == "elif")
@@ -402,101 +441,89 @@ void convert_to_cpp(unsigned long int start,
 			//if the functin is is to respond from stdIn
 			if(*itr=="raw_input")
 			{
-				itr++;
-				bool f = 0;
-				int i = 0;
-				expr.append(*(itr+1));
-				while(*itr!=":") {
-					i++;
-					// if(*itr=="(") f=1;
-					// if(!f) expr.append(*itr);
 					itr++;
-					if(i==1000000)
-					{
-						std::cout<<": missing on line "<<i<<std::endl;
-						exit(0);
+					bool f = 0;
+					int i = 0;
+					expr.append(*(itr+1));
+					while(*itr!=":") {
+						i++;
+						// if(*itr=="(") f=1;
+						// if(!f) expr.append(*itr);
+						itr++;
+						if(i==1000000)
+						{
+							std::cout<<": missing on line "<<i<<std::endl;
+							exit(0);
+						}
 					}
-				}
-				std::cout<<"GDFDDDDDDDCC"<<expr<"GDDDDDDDDD\n";
-				itr++;
-				variables[v]=map_type(*itr,i);
-				converted_code.append((size_t)lines[i].second*tab_size,' ');			
-				converted_code.append(variables[v]);
-				if(variables[v]=="artificial_string")
-					converted_code.append(" "+v+"(\"\");\n");					
-				else converted_code.append(" "+v+";\n"	);
+					std::cout<<"GDFDDDDDDDCC"<<expr<"GDDDDDDDDD\n";
+					itr++;
+					variables[v]=map_type(*itr,i);
+					converted_code.append((size_t)lines[i].second*tab_size,' ');			
+					converted_code.append(variables[v]);
+					if(variables[v]=="artificial_string")
+						converted_code.append(" "+v+"(\"\");\n");					
+					else converted_code.append(" "+v+";\n"	);
 
-				converted_code.append((size_t)lines[i].second*tab_size,' ');
-				converted_code.append("std::cout<<");
-				converted_code.append(expr);
-				converted_code.append(";\n");
-				converted_code.append((size_t)lines[i].second*tab_size,' ');
-				converted_code.append("std::cin>>");
-				converted_code.append(v);
-				converted_code.append(";\n");
+					converted_code.append((size_t)lines[i].second*tab_size,' ');
+					converted_code.append("std::cout<<");
+					converted_code.append(expr);
+					converted_code.append(";\n");
+					converted_code.append((size_t)lines[i].second*tab_size,' ');
+					converted_code.append("std::cin>>");
+					converted_code.append(v);
+					converted_code.append(";\n");
 				
 			}
 			//all other function calls and varible declarations and procesing
 			else{
-			if(is_function_call)
-				while(itr!=tokens.end()) expr.append(*itr++);
-			else{
-			while(*itr!=":" && itr!=tokens.end())
-				expr.append(*itr++);
-			}
-			//if the type is expliciyly mentioneand do u hhave passport here, mine is at home 
-			bool type_annotated = 1;
-			if(itr == tokens.end())
-			{
-				type_annotated = 0;
-				if(!is_function_call)
-					std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
-			}
-
-			std::vector< std::string >::iterator itr1 = itr;
-			if(type_annotated)	{
-				itr1 = itr+1;
-			}
-
-    		expr = eval_expr(expr);
-
-			if(!is_function_call)
-			{
-				bool not_decl = (variables.find(v) != variables.end());
-
-				if(!type_annotated)
-					variables[v]=expr_type(expr,variables);
-				else {
-					variables[v]="dfsg";
-					std::cout<<"<< "<<map_type(*itr1,i)<<" >>\n";
-
-					variables[v]=map_type(*itr1,i);
+					if(is_function_call)
+						while(itr!=tokens.end()) expr.append(*itr++);
+					else{
+							while(*itr!=":" && itr!=tokens.end())
+								expr.append(*itr++);
 					}
-				converted_code.append((size_t)lines[i].second*tab_size,' ');
+					//if the type is expliciyly mentioned 
+					bool type_annotated = 1;
+					if(itr == tokens.end())
+					{
+						type_annotated = 0;
+						if(!is_function_call)
+							std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
+					}
+
+					std::vector< std::string >::iterator itr1 = itr;
+					if(type_annotated)	{
+						itr1 = itr+1;
+					}
+
+		    		expr = eval_expr(expr);
+
+					if(!is_function_call)
+					{
+						bool not_decl = (variables.find(v) != variables.end());
 				
-				if(!variables.count(v))
-				{//this bracket to be closed
-				   if(variables[v]!="list" &&variables[v]!="map" && variables[v]!="dict")
-					converted_code.append(variables[v]);
-				}
-
-				// else if(variable[v]=="list")
-				// {
-
-				// }
-				else if(!not_decl) converted_code.append(expr_type(v,variables));	
-				converted_code.append(" ");
-				converted_code.append(v);
-				converted_code.append(" = ");
-				converted_code.append(expr);
-				converted_code.append(";\n");
+						
+							if(!type_annotated)
+								variables[v]=expr_type(expr,variables);
+							else
+								variables[v]=map_type(*itr1,i);
+								
+							converted_code.append((size_t)lines[i].second*tab_size,' ');		
+							
+						if(!not_decl) converted_code.append(expr_type(v,variables));	
+						converted_code.append(" ");
+						converted_code.append(v);
+						converted_code.append(" = ");
+						converted_code.append(expr);
+						converted_code.append(";\n");
+					}
+					else{// if it is a function call
+						converted_code.append((size_t)lines[i].second*tab_size,' ');
+						converted_code.append(expr);
+						converted_code.append(";\n");
+					}
 			}
-			else{// if it is a function call
-				converted_code.append((size_t)lines[i].second*tab_size,' ');
-				converted_code.append(expr);
-				converted_code.append(";\n");
-			}
-		}
 			i++;
 			continue;
 
