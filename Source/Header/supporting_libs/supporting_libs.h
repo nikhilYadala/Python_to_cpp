@@ -8,6 +8,7 @@
 #ifndef supporting_libs
 #define supporting_libs
 
+#include<regex>
 #include<vector>
 #include<algorithm>
 #include<string>
@@ -19,6 +20,7 @@
 #include<map>
 #include<stdlib.h>
 
+// string
 /*  under dev
 template<class key_type, class value_type>
 class hash_tables

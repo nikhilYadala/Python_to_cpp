@@ -24,6 +24,42 @@ void self_sanitize(std::string* code) {
         itr = code->find("self", itr);
     }
 
+    itr = code->find("import re", 0);
+    while(itr != std::string::npos) {
+        code->replace(itr, 9, ""); 
+        itr = code->find("self", itr);
+    }
+
+    int rem = code->find("re.search(");
+    itr =  code->find("re.search(")+10;
+    	// std::cout<<">>>>>>>>>>>"<<itr<<"  "<<"\n";
+    while(*(code->begin()+itr)==' ')
+    	itr++;
+
+    std::string s ="",r="";
+    while(*(code->begin()+itr)!=','){
+    	r.push_back(*(code->begin()+itr));
+    	itr++;
+    }
+    itr++;
+
+    while(*(code->begin()+itr)!=')'){
+    	s.push_back(*(code->begin()+itr));
+    	itr++;
+    }
+    rem=itr-rem+1;
+       itr = code->find("re.search(", 0);
+    while(itr != std::string::npos) {
+        code->replace(itr, rem, "std::regex_match("+s+",std::regex("+r+"))"); 
+        itr = code->find("re.search(", itr);
+    }
+	// if(std::find(tokens.begin(), tokens.end(),"re.search")!=tokens.end())
+	// {
+	// 	converted_code.append((size_t)lines[i].second*tab_size,' ');	
+	// 	converted_code.append("bool "+v+" = std::regex_match("+*(itr+8)+", std::regex_match("+*(itr+6)+"))"+"\n");		
+
+	// }
+
 }
 
 /** @brief Evaluate the python code to break into functions
@@ -36,8 +72,7 @@ void source_code::functionize()
 {
 	code.push_back('\n');
 	self_sanitize(&code);
-	std::cout<<"\n\n\n\n\n\n"<<code<<"\n\n\n\n\n\n";
-		
+	std::cout<<code<<"\n\n\n";
 	for(std::string::iterator itr=code.begin();itr!=code.end();)   //This for loop has no increment part to provide flexibility to inner code 
 	{
 		
@@ -76,8 +111,8 @@ void source_code::functionize()
 			lines.push_back(line_pair(buff,space_count));
 	}
 
-	    for(std::vector< line_pair >::iterator itr=lines.begin();itr!=lines.end();++itr)
-		   std::cout<<"lin"<<itr-lines.begin()<<": "<<itr->second<<"          "<<itr->first<<"\n"; 
+	    // for(std::vector< line_pair >::iterator itr=lines.begin();itr!=lines.end();++itr)
+		   // std::cout<<"lin"<<itr-lines.begin()<<": "<<itr->second<<"          "<<itr->first<<"\n"; 
 
 	functions.resize(1);//Add sparse code here later
 

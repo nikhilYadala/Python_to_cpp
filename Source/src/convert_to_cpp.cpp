@@ -7,6 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include <ctype.h>
+#include<algorithm>
 #include <map>
 #include <stdlib.h>
 #include <iostream>
@@ -235,7 +236,7 @@ void convert_to_cpp(unsigned long int start,
 			if(is_not)
 				expr.append("!");
 
-			while(*itr!=":")
+			while(itr!=tokens.end()-1)
 				expr.append(*(itr++));
 			
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
@@ -291,18 +292,27 @@ void convert_to_cpp(unsigned long int start,
 		{
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			converted_code.append("return ");
+			std::vector< std::string >::iterator itr1;
 			std::string expr="";
-			while((++itr)!=tokens.end())
+			bool f= 0;
+			while((++itr)!=tokens.end()){
+				if(*itr==":"){
+					f=1;
+					break;
+				}
 				expr.append(*itr);
-			
+			}
+			itr1 = itr+1;
 			
 			converted_code.append(expr);
 			converted_code.append(";\n");
 			// std::cout<<"OKK";
-			if(expr_type(expr,variables)!=""){
+			if(expr_type(expr,variables)!="")
 				_function->return_type=expr_type(expr,variables);
-			}
-			break;	//break in return as must be last line of every sensible function  
+			else if(f)
+				_function->return_type=*itr1;
+			
+			break;	//break in return as must be last line of every sensible function  or block
 		}
 
 		if(*itr=="else")
@@ -435,9 +445,11 @@ void convert_to_cpp(unsigned long int start,
 				itr=itr+2;	//skip = sign
 			}
 
-			if(*itr=="raw_input")
+
+			if(std::find(tokens.begin(), tokens.end(),"raw_input")!=tokens.end())
 			{
-				itr++;
+				tokens.pop_back();
+				itr=itr+3;
 				bool f = 0;
 				int i = 0;
 				expr.append(*(itr+1));
@@ -452,7 +464,6 @@ void convert_to_cpp(unsigned long int start,
 						exit(0);
 					}
 				}
-				std::cout<<"GDFDDDDDDDCC"<<expr<"GDDDDDDDDD\n";
 				itr++;
 				variables[v]=map_type(*itr,i);
 				converted_code.append((size_t)lines[i].second*tab_size,' ');			
