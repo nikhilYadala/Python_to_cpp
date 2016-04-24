@@ -77,7 +77,7 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 			else if(*i=='[')
 				return "list"; //for python lists to cpp arrays
 			else if(*i=='{')
-				return "dict" //for python dictonaries to cpp maps
+				return "dict"; //for python dictonaries to cpp maps
 		return "long int";
 	}	
 	std::string::iterator itr=expr.begin();
@@ -462,26 +462,12 @@ void convert_to_cpp(unsigned long int start,
 					i++;
 					// if(*itr=="(") f=1;
 					// if(!f) expr.append(*itr);
-			//if the functin is is to respond from stdIn
-			if(*itr=="raw_input")
-			{
-
 					itr++;
-					bool f = 0;
-					int i = 0;
-					expr.append(*(itr+1));
-					while(*itr!=":") {
-						i++;
-						// if(*itr=="(") f=1;
-						// if(!f) expr.append(*itr);
-						itr++;
-						if(i==1000000)
-						{
-							std::cout<<": missing on line "<<i<<std::endl;
-							exit(0);
-						}
+					if(i==1000000)
+					{
+						std::cout<<": missing on line "<<i<<std::endl;
+						exit(0);
 					}
-
 				}
 				itr++;
 				variables[v]=map_type(*itr,i);
