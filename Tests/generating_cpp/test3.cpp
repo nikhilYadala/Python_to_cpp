@@ -95,21 +95,6 @@ TEST (render_code, ifelsecondition ){
 
 TEST (render_code, whileloop ){
 	std::string input_src;
-	if (FILE *fp = fopen("generating_cpp/q.py","r"))
-	{
-		char buf[chunk];
-		while (size_t len = fread(buf, 1, sizeof(buf), fp))
-			input_src.insert(input_src.end(), buf, buf + len);
-		fclose(fp);
-
-		
-	}
-	else {
-		std::cout<<"Unable to open source file (main.cpp)\n";
-	exit(0);
-	}
-	
-	
 	system("../translator  generating_cpp/q.py");
 	
 	

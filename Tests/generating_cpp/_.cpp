@@ -2,7 +2,7 @@
 
 int main( )
 {
-std::cout<<1<<"  "<<"Happy";
+std::cout<<1<<"Happy";
  
 return 0;
 }

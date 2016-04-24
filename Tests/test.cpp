@@ -6,6 +6,7 @@
 #include "functionize/test2.cpp"
 #include "generating_cpp/test3.cpp"
 #include "alltests/runtest.cpp"
+#include "alltests/newtest.cpp"
 
 int main(int argc, char **argv) {
 ::testing::InitGoogleTest(&argc, argv);
