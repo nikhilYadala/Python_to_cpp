@@ -1,5 +1,8 @@
 //this function is called from generated cpp_classes function which was called fr_om the main function after functionazing and make_classes class
-
+/** @file convert_to_cpp_classes.cpp
+ *  @brief The helper functions in this file help converting python classes to its equivalent cpp version
+ *  @bug No known bugs.
+ */
 #include <vector>
 #include <string>
 #include <string.h>
@@ -12,10 +15,24 @@
 //responds for the following function call from generated_cpp_classes()
 //convert_to_cpp_classes(itr->first,itr->second,lines,&converted_code,&final_class);
 
-
+/** @brief The functions defined in a class are sent into this functio
+ *
+ * @param starting line of the python code of a funciton
+ * @param ending line of the python code of a function
+ * @param all the lines of the python code
+ * @param string into which the converted_Cpp_code is returned
+ * @param function_declaration stores all the properties of the concerned function
+ * @param variables structure to deal with the variables declared and intialised
+ *               in this function
+ * @return NIL
+ */
 void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );
 
-
+/** @brief Evaluate the python code to C++ code 
+ *
+ *  @param python expression
+ *  @return converted C++ expression.
+ */
 std::string eval_expr_(std::string& s)
 {
 	std::string evaled = "";
@@ -38,7 +55,12 @@ std::string eval_expr_(std::string& s)
 }
 
 
-
+/** @brief Checks the special symbols used 
+ *   
+ *   It reads the character and checks if it is a special symbol used in python 
+ *  @param character c
+ *  @return Tells if the read symbol is special or not.
+ */
 bool is_symbol_(char c){
 	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
@@ -73,7 +95,13 @@ std::string expr_type_(std::string& expr,std::map< std::string,std::string >& va
 	else return "";
 }
 
-
+/** @brief Breaks the python string to words 
+ *
+ *   It breaks the python string into words and breaks into token   
+ *  @param the python line to be tokenised
+ *  @param pointer to the template where the tokens are stored
+ *  @return NIL
+ */
 void break_into_words_(std::string& line,std::vector< std::string >& tokens)
 {
 	int flag=1;	//to check if a symbol has been pushed and tokens.end()-1 isn't a continuing token
@@ -107,7 +135,19 @@ void break_into_words_(std::string& line,std::vector< std::string >& tokens)
 }
 
 
-
+/** @brief The function to identify all the properties of class 
+ *          in concern and to convert to cpp
+ *
+ * @param starting line of the python code of a class
+ * @param ending line of the python code of a class
+ * @param all the lines of the python code
+ * @param string into which the converted_Cpp_code is returned
+ * @param class_declaration stores all the properties of the concerned class
+ *         also stores the inherieted functions
+ * @param variables structure to deal with the variables declared and intialised
+ *               in this class
+ * @return NIL
+ */
 
 void convert_to_cpp_classes(unsigned long int start,
 							unsigned long int end,
@@ -314,17 +354,8 @@ void convert_to_cpp_classes(unsigned long int start,
 
 		}	
 
-
-
-		/***** SOME MORE CASES HAVE TO BE TAKEN CARE OF HERE.*****/
-		/***** Variables have to be explicitly taken care off.****/
-      
       //At the the end, the closing lines of the classe in c++ is written
-
-    
-     }
-
-    //  converted_code.append("\ntalking of this one};\n");
+ }
      // the above step to be taken care off in rendering the cpp code
    
  std::cout<<"printing the converted class code\n"<<converted_code <<"haha\n";

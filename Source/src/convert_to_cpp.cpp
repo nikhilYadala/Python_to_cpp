@@ -7,7 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include <ctype.h>
-#include<algorithm>
+#include <algorithm>
 #include <map>
 #include <stdlib.h>
 #include <iostream>
@@ -96,7 +96,8 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 /** @brief Breaks the python string to words 
  *
  *   It breaks the python string into words and breaks into token   
- *  @param python string 
+ *  @param the python line to be tokenised
+ *  @param pointer to the template where the tokens are stored
  *  @return NIL
  */
 void break_into_words(std::string& line,std::vector< std::string >& tokens)
@@ -133,7 +134,8 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 /** @brief Wraps mentioned type of variable
  *
  *  It reads the type if mentioned in the python code  
- *  @param string type that has type ,int l 
+ *  @param string type that has type
+ *  @param the line containing the annotated type 
  *  @return The type of the variable.
  */
 std::string map_type(std::string s, int l)
@@ -165,11 +167,16 @@ std::ostringstream oss;
   oss<< number;
   return oss.str();
 }
-/** @brief Converts Python code to C++ code in order 
+/** @brief The functions defined in a class are sent into this functio
  *
- *  It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending.   
- *  @param starting line, ending line,vector of lines of code, function parameters, variables table 
- *  @return NIL 
+ * @param starting line of the python code of a funciton
+ * @param ending line of the python code of a function
+ * @param all the lines of the python code
+ * @param string into which the converted_Cpp_code is returned
+ * @param function_declaration stores all the properties of the concerned function
+ * @param variables structure to deal with the variables declared and intialised
+ *               in this function
+ * @return NIL
  */
 void convert_to_cpp(unsigned long int start,
 					unsigned long int end,
@@ -543,10 +550,10 @@ void convert_to_cpp(unsigned long int start,
 
 
 
-		}	 
-		i++;							// if nothing gets caught
+		}	//end of elif statement for !def
+		i++;// if nothing gets caught
 	
-	}		
+	}//end of the for loop which iterates over lines to convert the code into cpp 	
 
-}
+}//end of the class
 

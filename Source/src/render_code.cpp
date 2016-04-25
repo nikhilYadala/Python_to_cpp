@@ -1,5 +1,6 @@
  /** @file render_code.cpp
- *  @brief Renders the code in proper format 
+ *  @brief The output from convert_to_cpp and convert_to_cpp_classes is fed to
+ *         this function to render it in proper human readable, correct cpp format
  *  @bug No known bugs.
  */
 #include <vector>

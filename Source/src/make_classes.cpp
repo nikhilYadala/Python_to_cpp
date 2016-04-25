@@ -1,3 +1,10 @@
+/** @file functionize.cpp
+ *  @brief The code after being broken into lines is sent here
+ *          This function then identifies all the lines that belong to 
+ *           its corresponding class 
+ *  @bug No known bugs.
+ */
+
 #include <vector>
 #include <string>
 #include <iostream>
