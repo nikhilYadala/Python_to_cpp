@@ -86,7 +86,7 @@ ASSERT_STREQ("WE LIKE CS242",abc.str.c_str());
  *  It defines a class of source code and runs the max string function
  *  @param Nil.
  *  @return If the testcase is passed or not.
- */max
+ */
 TEST (max, trivialnull){
 	artificial_string abc= artificial_string("@!@#443243646");
 	EXPECT_EQ(' ',abc.max());
@@ -114,7 +114,7 @@ TEST (max, diffstrings) {                                       //To Test the ma
  *  It defines a class of source code and runs the lower string function
  *  @param Nil.
  *  @return If the testcase is passed or not.
- */lower
+ */
 TEST (lower, trivialnull){
 	artificial_string abc= artificial_string("");
 	abc.lower();
@@ -143,7 +143,7 @@ ASSERT_STREQ("we like cs242",abc.str.c_str());
  *  It defines a class of source code and runs the min string function
  *  @param Nil.
  *  @return If the testcase is passed or not.
- */min
+ */
 TEST (min, trivialnull){
 artificial_string abc= artificial_string("@!@#443243646");
 	EXPECT_EQ(' ',abc.min());
@@ -170,7 +170,7 @@ abc.str="zZaA@!";
  *  It defines a class of source code and runs the swapcase string function
  *  @param Nil.
  *  @return If the testcase is passed or not.
- */swapcase
+ */
 TEST (swapcase, trivialnull){
 artificial_string abc= artificial_string("");
 	abc.swapcase();
