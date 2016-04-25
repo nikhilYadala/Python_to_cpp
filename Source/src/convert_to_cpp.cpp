@@ -7,7 +7,7 @@
 #include <string.h>
 #include <iostream>
 #include <ctype.h>
-#include <algorithm>
+#include<algorithm>
 #include <map>
 #include <stdlib.h>
 #include <iostream>
@@ -64,9 +64,9 @@ bool is_symbol(char c){
  */
 std::string expr_type(std::string& expr,std::map< std::string,std::string >& variables)
 {	
-	if(variables.count(expr))
-		return variables[expr];
 
+	if(expr[0]=='[')
+		return "list";
 	if(expr.substr(0,17)=="artificial_string")
 		return "artificial_string";
 	if(isdigit(expr[0]) || expr[0]=='-')
@@ -74,10 +74,6 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 		for(std::string::iterator i=expr.begin();i!=expr.end();++i)
 			if(*i=='.')
 				return "double";
-			else if(*i=='[')
-				return "list"; //for python lists to cpp arrays
-			else if(*i=='{')
-				return "dict"; //for python dictonaries to cpp maps
 		return "long int";
 	}	
 	std::string::iterator itr=expr.begin();
@@ -96,8 +92,7 @@ std::string expr_type(std::string& expr,std::map< std::string,std::string >& var
 /** @brief Breaks the python string to words 
  *
  *   It breaks the python string into words and breaks into token   
- *  @param the python line to be tokenised
- *  @param pointer to the template where the tokens are stored
+ *  @param python string 
  *  @return NIL
  */
 void break_into_words(std::string& line,std::vector< std::string >& tokens)
@@ -134,8 +129,7 @@ void break_into_words(std::string& line,std::vector< std::string >& tokens)
 /** @brief Wraps mentioned type of variable
  *
  *  It reads the type if mentioned in the python code  
- *  @param string type that has type
- *  @param the line containing the annotated type 
+ *  @param string type that has type ,int l 
  *  @return The type of the variable.
  */
 std::string map_type(std::string s, int l)
@@ -167,16 +161,11 @@ std::ostringstream oss;
   oss<< number;
   return oss.str();
 }
-/** @brief The functions defined in a class are sent into this functio
+/** @brief Converts Python code to C++ code in order 
  *
- * @param starting line of the python code of a funciton
- * @param ending line of the python code of a function
- * @param all the lines of the python code
- * @param string into which the converted_Cpp_code is returned
- * @param function_declaration stores all the properties of the concerned function
- * @param variables structure to deal with the variables declared and intialised
- *               in this function
- * @return NIL
+ *  It takes lines of code in python and converts it to C++ in exactly the same order from beginning to ending.   
+ *  @param starting line, ending line,vector of lines of code, function parameters, variables table 
+ *  @return NIL 
  */
 void convert_to_cpp(unsigned long int start,
 					unsigned long int end,
@@ -389,13 +378,37 @@ void convert_to_cpp(unsigned long int start,
 	//code for converting for loops in python to cpp
 		else if(*itr=="for")
 		{
+			if(std::count(tokens.begin(),tokens.end(),"range")==0)
+			{
+			std::cout<<"KKK "<<tokens[1]<<"  "<<tokens[3]<<"\n";
+			converted_code.append((size_t)lines[i].second*tab_size,' ');
+
+				converted_code.append("\nfor (auto &").append(tokens[1]).append(" : ").append(tokens[3]).append(")");
+ 			int spaces = (size_t)lines[i].second;
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("{\n");
+
+			int space_count=lines[i].second,st=i;
+
+			while(lines[++i].second>space_count); //to find the complete for block
+			std::string snippet;
+			convert_to_cpp(st+1,i-1,lines,snippet,_function,variables);
+			converted_code.append(snippet);
+			converted_code.append(spaces*tab_size,' ');
+			converted_code.append("}\n");
+			//i already incremented while changing lines
+			continue;
+
+			}
+			else {
 			converted_code.append((size_t)lines[i].second*tab_size,' ');
 			int spaces=(size_t)lines[i].second;
 			converted_code.append("for(long int ");
 			converted_code.append(*(++itr)); 
 			std::string var=*(itr); 
 
-			std::string start_range="0";std::string end_range="";
+			std::string start_range="0";
+			std::string end_range="";
 
 			std::vector< std::string >::iterator itr2;
 			itr2=++itr;//bypassing "in"
@@ -441,6 +454,7 @@ void convert_to_cpp(unsigned long int start,
 			converted_code.append("}\n");
 			//i already incremented while changing lines
 			continue;
+		}
 
 
 	}//end elseif statement for for loop
@@ -449,7 +463,6 @@ void convert_to_cpp(unsigned long int start,
 		{
 
 			std::string v=*itr;
-			std::cout<<"::::::::::::"<<v<<"::::::::::\n\n";
 			std::string expr="";
 			bool is_function_call=1;
 			if(*(itr+1)=="="){
@@ -514,9 +527,9 @@ void convert_to_cpp(unsigned long int start,
 					}
 
 					std::vector< std::string >::iterator itr1 = itr;
-					if(type_annotated)	{
+					if(type_annotated)	
 						itr1 = itr+1;
-					}
+					
 
 		    		expr = eval_expr(expr);
 
@@ -524,21 +537,57 @@ void convert_to_cpp(unsigned long int start,
 					{
 						bool not_decl = (variables.find(v) != variables.end());
 				
-						
 							if(!type_annotated)
 								variables[v]=expr_type(expr,variables);
-							else
-								variables[v]=map_type(*itr1,i);
-								
+							else{
+								std::string t ="";
+								while(itr1!=tokens.end()){
+									t.append(*itr1);
+									itr1++;
+								}
+								variables[v]=map_type(t,i);
+							}
+									
 							converted_code.append((size_t)lines[i].second*tab_size,' ');		
 							
-						if(!not_decl) converted_code.append(expr_type(v,variables));	
-						converted_code.append(" ");
-						converted_code.append(v);
-						converted_code.append(" = ");
-						converted_code.append(expr);
-						converted_code.append(";\n");
+								if(expr_type(expr,variables)=="list")
+								{
+									itr = tokens.begin()+3;
+									converted_code.append("std::"+variables[v]+" ").append(v).append(";");
+									// std::string::iterator itr3=itr;
+									// if(variables.count(*itr3))
+									// {
+									// 	for(std::vector <int>::iterator it=(*itr3).begin();it!=(*itr3).end();it++)
+
+									// }
+
+
+									while(*itr!="]")
+									{
+										if(*itr=="["||*itr==",")
+											itr++;
+ 										else {converted_code.append("\n").append(v).append(".push_back(").append(*itr).append(");");
+ 											itr++;
+ 									}
+ 								    }
+
+
+                                   }
+
+						 		   if(expr_type(expr,variables)!="list")
+									{	
+										if(!not_decl) 
+										converted_code.append(variables[v]);	
+										converted_code.append(" ");
+										converted_code.append(v);
+										converted_code.append(" = ");
+										converted_code.append(expr);
+										converted_code.append(";\n");
+									
+									}
 					}
+
+					
 					else{// if it is a function call
 						converted_code.append((size_t)lines[i].second*tab_size,' ');
 						converted_code.append(expr);
@@ -550,10 +599,10 @@ void convert_to_cpp(unsigned long int start,
 
 
 
-		}	//end of elif statement for !def
-		i++;// if nothing gets caught
+		}	 
+		i++;							// if nothing gets caught
 	
-	}//end of the for loop which iterates over lines to convert the code into cpp 	
+	}		
 
-}//end of the class
+}
 

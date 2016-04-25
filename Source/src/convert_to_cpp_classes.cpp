@@ -1,11 +1,9 @@
 //this function is called from generated cpp_classes function which was called fr_om the main function after functionazing and make_classes class
-/** @file convert_to_cpp_classes.cpp
- *  @brief The helper functions in this file help converting python classes to its equivalent cpp version
- *  @bug No known bugs.
- */
+
 #include <vector>
 #include <string>
 #include <string.h>
+#include <algorithm>
 #include <iostream>
 #include <map>
 
@@ -15,24 +13,31 @@
 //responds for the following function call from generated_cpp_classes()
 //convert_to_cpp_classes(itr->first,itr->second,lines,&converted_code,&final_class);
 
-/** @brief The functions defined in a class are sent into this functio
- *
- * @param starting line of the python code of a funciton
- * @param ending line of the python code of a function
- * @param all the lines of the python code
- * @param string into which the converted_Cpp_code is returned
- * @param function_declaration stores all the properties of the concerned function
- * @param variables structure to deal with the variables declared and intialised
- *               in this function
- * @return NIL
- */
+
 void convert_to_cpp(unsigned long int start,unsigned long int end,std::vector< line_pair >& lines,std::string& converted_code,function_declaration* _function,std::map< std::string,std::string >& variables );
 
-/** @brief Evaluate the python code to C++ code 
+/** @brief Wraps mentioned type of variable
  *
- *  @param python expression
- *  @return converted C++ expression.
+ *  It reads the type if mentioned in the python code  
+ *  @param string type that has type ,int l 
+ *  @return The type of the variable.
  */
+std::string map_type_(std::string s, int l)
+{
+	if(s=="int")
+		return "long int";
+	if(s=="float")
+		return "float";
+	if(s=="s")
+		return "artificial_string";
+	else {
+		std::cout<<"[ WARNING ] Bad type name "<<s<<"!! on line "<<l<<std::endl;
+		return s;
+	}
+
+
+}
+
 std::string eval_expr_(std::string& s)
 {
 	std::string evaled = "";
@@ -55,12 +60,7 @@ std::string eval_expr_(std::string& s)
 }
 
 
-/** @brief Checks the special symbols used 
- *   
- *   It reads the character and checks if it is a special symbol used in python 
- *  @param character c
- *  @return Tells if the read symbol is special or not.
- */
+
 bool is_symbol_(char c){
 	char symbols[]=" =:;(){}[]|,.&+-<>*/'\n#";
 
@@ -95,13 +95,7 @@ std::string expr_type_(std::string& expr,std::map< std::string,std::string >& va
 	else return "";
 }
 
-/** @brief Breaks the python string to words 
- *
- *   It breaks the python string into words and breaks into token   
- *  @param the python line to be tokenised
- *  @param pointer to the template where the tokens are stored
- *  @return NIL
- */
+
 void break_into_words_(std::string& line,std::vector< std::string >& tokens)
 {
 	int flag=1;	//to check if a symbol has been pushed and tokens.end()-1 isn't a continuing token
@@ -135,19 +129,7 @@ void break_into_words_(std::string& line,std::vector< std::string >& tokens)
 }
 
 
-/** @brief The function to identify all the properties of class 
- *          in concern and to convert to cpp
- *
- * @param starting line of the python code of a class
- * @param ending line of the python code of a class
- * @param all the lines of the python code
- * @param string into which the converted_Cpp_code is returned
- * @param class_declaration stores all the properties of the concerned class
- *         also stores the inherieted functions
- * @param variables structure to deal with the variables declared and intialised
- *               in this class
- * @return NIL
- */
+
 
 void convert_to_cpp_classes(unsigned long int start,
 							unsigned long int end,
@@ -323,39 +305,147 @@ void convert_to_cpp_classes(unsigned long int start,
 				is_function_call=0;
 				itr=itr+2;	//skip = sign
 			}
-			while(itr!=tokens.end())
-				expr.append(*itr++);
-    		expr = eval_expr_(expr);
 
-			if(!is_function_call){
-				variables[v]=expr_type_(expr,variables);
-			
-			converted_code.append((size_t)lines[i].second*tab_size,' ');
-			if(!variables.count(v))
+
+
+			if(std::find(tokens.begin(), tokens.end(),"raw_input")!=tokens.end())
+			{
+				tokens.pop_back();
+				itr=itr+3;
+				bool f = 0;
+				int i = 0;
+				expr.append(*(itr+1));
+				while(*itr!=":") {
+					i++;
+					// if(*itr=="(") f=1;
+					// if(!f) expr.append(*itr);
+					itr++;
+					if(i==1000000)
+					{
+						std::cout<<": missing on line "<<i<<std::endl;
+						exit(0);
+					}
+				}
+				itr++;
+				variables[v]=map_type_(*itr,i);
+				converted_code.append((size_t)lines[i].second*tab_size,' ');			
 				converted_code.append(variables[v]);
-			converted_code.append(expr_type_(v,variables));	
-			converted_code.append(" ");
-			converted_code.append(v);
-			converted_code.append(" = ");
-			    		std::cout<<"Evaled  -- "<<expr<<"\n";
+				if(variables[v]=="artificial_string")
+					converted_code.append(" "+v+"(\"\");\n");					
+				else converted_code.append(" "+v+";\n"	);
 
-			converted_code.append(expr);
-			converted_code.append(";\n");
-			}
-			else{
 				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cout<<");
 				converted_code.append(expr);
 				converted_code.append(";\n");
+				converted_code.append((size_t)lines[i].second*tab_size,' ');
+				converted_code.append("std::cin>>");
+				converted_code.append(v);
+				converted_code.append(";\n");
 
+				
 			}
+			//all other function calls and varible declarations and procesing
+			else{
+					if(is_function_call)
+						while(itr!=tokens.end()) expr.append(*itr++);
+					else{
+							while(*itr!=":" && itr!=tokens.end())
+								expr.append(*itr++);
+					}
+					//if the type is expliciyly mentioned 
+					bool type_annotated = 1;
+					if(itr == tokens.end())
+					{
+						type_annotated = 0;
+						if(!is_function_call)
+							std::cout<<"[ WARNING ] Auto type predicting at line "<<i<<std::endl;
+					}
 
+					std::vector< std::string >::iterator itr1 = itr;
+					if(type_annotated)	
+						itr1 = itr+1;
+					
+
+		    		expr = eval_expr_(expr);
+
+					if(!is_function_call)
+					{
+						bool not_decl = (variables.find(v) != variables.end());
+				
+							if(!type_annotated)
+								variables[v]=expr_type_(expr,variables);
+							else{
+								std::string t ="";
+								while(itr1!=tokens.end()){
+									t.append(*itr1);
+									itr1++;
+								}
+								variables[v]=map_type_(t,i);
+							}
+									
+							converted_code.append((size_t)lines[i].second*tab_size,' ');		
+							
+								if(expr_type_(expr,variables)=="list")
+								{
+									itr = tokens.begin()+3;
+									converted_code.append("std::"+variables[v]+" ").append(v).append(";");
+									// std::string::iterator itr3=itr;
+									// if(variables.count(*itr3))
+									// {
+									// 	for(std::vector <int>::iterator it=(*itr3).begin();it!=(*itr3).end();it++)
+
+									// }
+
+
+									while(*itr!="]")
+									{
+										if(*itr=="["||*itr==",")
+											itr++;
+ 										else {converted_code.append("\n").append(v).append(".push_back(").append(*itr).append(");");
+ 											itr++;
+ 									}
+ 								    }
+
+
+                                   }
+
+						 		   if(expr_type_(expr,variables)!="list")
+									{	
+										if(!not_decl) 
+										converted_code.append(variables[v]);	
+										converted_code.append(" ");
+										converted_code.append(v);
+										converted_code.append(" = ");
+										converted_code.append(expr);
+										converted_code.append(";\n");
+									
+									}
+					}
+
+					
+					else{// if it is a function call
+						converted_code.append((size_t)lines[i].second*tab_size,' ');
+						converted_code.append(expr);
+						converted_code.append(";\n");
+					}
+			}
 			i++;
 			continue;
 
 		}	
 
+
+
+		/***** SOME MORE CASES HAVE TO BE TAKEN CARE OF HERE.*****/
+		/***** Variables have to be explicitly taken care off.****/
+      
       //At the the end, the closing lines of the classe in c++ is written
- }
+
+    
+     }
+
+    //  converted_code.append("\ntalking of this one};\n");
      // the above step to be taken care off in rendering the cpp code
    
  std::cout<<"printing the converted class code\n"<<converted_code <<"haha\n";
