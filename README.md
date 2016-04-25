@@ -6,6 +6,19 @@ scripts fast by converting to C++.Before using this code or any of its libraries
 at the LICENSE file supplied alongwith.
 
 
+Running the code
+==================
+Go into the folder containing the package, make it (cmd: make). The code would have got built and
+to convert a python code to c++ code, send the python code as an input argument to ./translator
+
+
+cmd:  ./translator <<path to the input python file>>
+
+There shall be a output file created with the same file name but with an extension of cpp
+Please Note that the output c++ code is in accordance with C++ code, and remeber to 
+add the std flag to use the cpp 11 standards, if not done before
+
+
 Users  Docs
 ===========================
 
